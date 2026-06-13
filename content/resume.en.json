@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// web first — sites and browser apps. I add other tools when the task needs them.",
     "stats": [
-      { "label": "skills", "value": "30", "href": "/skills" },
+      { "label": "skills", "value": "35", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,7 +88,7 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "30 items · sh",
+    "meta": "35 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
@@ -151,7 +151,13 @@
         "id": "enterprise",
         "label": "1c/",
         "hint": "accounting & ERP",
-        "items": ["1C"]
+        "items": [
+          "1C:Enterprise",
+          "Accounting",
+          "Document flow",
+          "ERP",
+          "Integrations"
+        ]
       },
       {
         "id": "other",
