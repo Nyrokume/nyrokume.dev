@@ -1,5 +1,9 @@
 import type { ChatProvider, ChatProviderContext } from "@/lib/chat-providers/types";
 import { assertLastUserMessage, toApiMessages } from "@/lib/chat-providers/messages";
+import {
+  CHAT_MAX_OUTPUT_TOKENS,
+  CHAT_TEMPERATURE,
+} from "@/lib/chat-generation-config";
 
 type OpenAICompatibleConfig = {
   id: "groq" | "openrouter";
@@ -46,8 +50,8 @@ async function generateOpenAICompatible(
           content: message.content,
         })),
       ],
-      temperature: 0.3,
-      max_tokens: 512,
+      temperature: CHAT_TEMPERATURE,
+      max_tokens: CHAT_MAX_OUTPUT_TOKENS,
     }),
     signal: AbortSignal.timeout(45_000),
   });

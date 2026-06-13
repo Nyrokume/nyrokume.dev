@@ -2,6 +2,10 @@ import {
   GoogleGenerativeAI,
   type Content,
 } from "@google/generative-ai";
+import {
+  CHAT_MAX_OUTPUT_TOKENS,
+  CHAT_TEMPERATURE,
+} from "@/lib/chat-generation-config";
 import type { ChatMessage } from "@/lib/chat-types";
 import { assertLastUserMessage, toApiMessages } from "@/lib/chat-providers/messages";
 import type { ChatProvider, ChatProviderContext } from "@/lib/chat-providers/types";
@@ -34,8 +38,8 @@ async function generateGemini(context: ChatProviderContext): Promise<string> {
     model: context.model,
     systemInstruction: context.systemPrompt,
     generationConfig: {
-      temperature: 0.3,
-      maxOutputTokens: 512,
+      temperature: CHAT_TEMPERATURE,
+      maxOutputTokens: CHAT_MAX_OUTPUT_TOKENS,
     },
   });
 
