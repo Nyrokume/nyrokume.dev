@@ -34,12 +34,24 @@ const DEFAULT_KEYWORDS = [
 
 /** GitHub Pages project-site prefix, e.g. `/nyrokume.dev`. Empty locally. */
 export function getBasePath(): string {
-  if (process.env.GITHUB_PAGES !== "true") {
-    return "";
+  if (process.env.GITHUB_PAGES === "true") {
+    const repo = process.env.GITHUB_PAGES_REPO ?? "nyrokume.dev";
+    return `/${repo}`;
   }
 
-  const repo = process.env.GITHUB_PAGES_REPO ?? "nyrokume.dev";
-  return `/${repo}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (siteUrl) {
+    try {
+      const pathname = new URL(siteUrl).pathname.replace(/\/$/, "");
+      if (pathname && pathname !== "/") {
+        return pathname;
+      }
+    } catch {
+      // ignore invalid URL
+    }
+  }
+
+  return "";
 }
 
 export function getSiteUrl(): string {

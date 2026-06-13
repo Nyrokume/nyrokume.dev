@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ChatSection } from "@/components/sections/chat-section";
+import { ProjectShowcaseCard } from "@/components/sections/project-showcase-card";
 import { useLocale } from "@/components/providers/locale-provider";
 import { TerminalReveal, TypewriterPrompt } from "@/components/ui/terminal-anim";
 import { TerminalWindow } from "@/components/ui/terminal-window";
@@ -72,12 +73,23 @@ export function ProjectsSection() {
 
           {activeProject ? (
             <TerminalReveal delay={120}>
-              <ProjectFocusCard
-                project={activeProject}
-                statusLabel={projects.statusLabels[activeProject.status]}
-                backLabel={projects.backToListLabel}
-                onBack={closeProject}
-              />
+              {activeProject.showcase ? (
+                <ProjectShowcaseCard
+                  project={activeProject}
+                  statusLabel={projects.statusLabels[activeProject.status]}
+                  highlightLabel={projects.highlightLabel}
+                  technologiesLabel={projects.technologiesLabel}
+                  backLabel={projects.backToListLabel}
+                  onBack={closeProject}
+                />
+              ) : (
+                <ProjectFocusCard
+                  project={activeProject}
+                  statusLabel={projects.statusLabels[activeProject.status]}
+                  backLabel={projects.backToListLabel}
+                  onBack={closeProject}
+                />
+              )}
             </TerminalReveal>
           ) : (
             <>
@@ -137,7 +149,7 @@ function ProjectFocusCard({
   backLabel: string;
   onBack: () => void;
 }) {
-  const isActive = project.status === "active";
+  const isActive = project.status === "active" || project.status === "done";
   const isChat = project.action === "chat";
   const isExternalLink = project.href?.startsWith("http");
 
@@ -175,7 +187,9 @@ function ProjectFocusCard({
                   <path strokeWidth="2" d="M4 7h5l2 2h9v9H4z" />
                 )}
               </svg>
-              <span className="truncate text-sm font-medium text-foreground">{project.slug}</span>
+              <span className="truncate text-sm font-medium text-foreground">
+                {project.showcase?.title ?? project.slug}
+              </span>
             </div>
             <span
               className={`shrink-0 rounded border px-1.5 py-px text-[10px] ${
@@ -236,7 +250,7 @@ function ProjectCard({
   statusLabel: string;
   onOpen: () => void;
 }) {
-  const isActive = project.status === "active";
+  const isActive = project.status === "active" || project.status === "done";
   const isChat = project.action === "chat";
 
   return (
@@ -273,7 +287,9 @@ function ProjectCard({
                   <path strokeWidth="2" d="M4 7h5l2 2h9v9H4z" />
                 )}
               </svg>
-              <span className="truncate text-sm font-medium text-foreground">{project.slug}</span>
+              <span className="truncate text-sm font-medium text-foreground">
+                {project.showcase?.title ?? project.slug}
+              </span>
             </div>
             <span
               className={`shrink-0 rounded border px-1.5 py-px text-[10px] ${

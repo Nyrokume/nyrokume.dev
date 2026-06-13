@@ -200,8 +200,11 @@
     "footerHref": "https://github.com/Nyrokume",
     "statusLabels": {
       "active": "active",
-      "wip": "wip"
+      "wip": "wip",
+      "done": "завершён"
     },
+    "highlightLabel": "ГЛАВНОЕ",
+    "technologiesLabel": "ТЕХНОЛОГИИ",
     "items": [
       {
         "id": "ai-chat",

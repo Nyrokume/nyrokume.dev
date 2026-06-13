@@ -77,17 +77,41 @@ export type SkillCategory = {
 
 export type ProjectAction = "link" | "chat";
 
+export type ProjectStatus = "active" | "wip" | "done";
+
+export type ProjectMediaItem = {
+  src: string;
+  alt: string;
+  type?: "image" | "video";
+  /** Poster for video previews */
+  poster?: string;
+};
+
+export type ProjectShowcase = {
+  /** Display name, e.g. OnePanel */
+  title: string;
+  /** Category line, e.g. Панели · Заказ · 2024 */
+  meta: string;
+  preview: ProjectMediaItem[];
+  highlight?: {
+    text: string;
+  };
+  technologies?: string[];
+};
+
 export type ProjectItem = {
   id: string;
   slug: string;
   sideLabel: string;
   sideHint: string;
   description: string;
-  status: "active" | "wip";
+  status: ProjectStatus;
   tags: string[];
   action: ProjectAction;
   actionLabel: string;
   href?: string;
+  /** Rich card with gallery — use for shipped portfolio projects */
+  showcase?: ProjectShowcase;
 };
 
 export type ContactCard = {
@@ -146,6 +170,8 @@ export type ResumeContent = {
     footerHref: string;
     chatCloseLabel: string;
     backToListLabel: string;
+    highlightLabel: string;
+    technologiesLabel: string;
     statusLabels: Record<ProjectItem["status"], string>;
     items: ProjectItem[];
     chat: ChatConfig;
