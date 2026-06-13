@@ -11,8 +11,8 @@ const folderIcons: Record<string, string> = {
   tools: "◫",
   languages: "◩",
   frameworks: "◮",
+  api: "◰",
   enterprise: "◭",
-  other: "◪",
 };
 
 export function SkillsSection() {

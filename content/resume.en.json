@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// web first — sites and browser apps. I add other tools when the task needs them.",
     "stats": [
-      { "label": "skills", "value": "35", "href": "/skills" },
+      { "label": "skills", "value": "39", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,7 +88,7 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "35 items · sh",
+    "meta": "39 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
@@ -145,7 +145,13 @@
         "id": "frameworks",
         "label": "frameworks/",
         "hint": "frameworks & platforms",
-        "items": ["Tauri", "Electron", "Express", "FastAPI"]
+        "items": ["Tauri", "Electron"]
+      },
+      {
+        "id": "api",
+        "label": "api/",
+        "hint": "integrations & AI",
+        "items": ["AI API"]
       },
       {
         "id": "enterprise",
@@ -158,12 +164,6 @@
           "ERP",
           "Integrations"
         ]
-      },
-      {
-        "id": "other",
-        "label": "other/",
-        "hint": "scripts & AI",
-        "items": ["AI API"]
       }
     ],
     "footerComment": "# total {total} skills — always learning more"

@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// разрабатываю сайты и веб-приложения. остальное подключаю, когда нужно по задаче.",
     "stats": [
-      { "label": "skills", "value": "35", "href": "/skills" },
+      { "label": "skills", "value": "37", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,7 +88,7 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "39 items · sh",
+    "meta": "37 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
@@ -145,7 +145,13 @@
         "id": "frameworks",
         "label": "frameworks/",
         "hint": "фреймворки и платформы",
-        "items": ["Tauri", "Electron", "Express", "FastAPI"]
+        "items": ["Tauri", "Electron"]
+      },
+      {
+        "id": "api",
+        "label": "api/",
+        "hint": "интеграции и AI",
+        "items": ["AI API"]
       },
       {
         "id": "enterprise",
@@ -158,12 +164,6 @@
           "ERP",
           "Интеграции"
         ]
-      },
-      {
-        "id": "other",
-        "label": "other/",
-        "hint": "скрипты и AI",
-        "items": ["AI API"]
       }
     ],
     "footerComment": "# total {total} skills — always learning more"
