@@ -1,0 +1,81 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy-api:
+    name: Chat API (Cloudflare)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      api_url: ${{ steps.api-url.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy worker
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: workers/chat-api
+          command: deploy
+          secrets: |
+            GEMINI_API_KEY
+            GROQ_API_KEY
+            OPENROUTER_API_KEY
+
+      - name: Resolve API URL
+        id: api-url
+        run: |
+          URL="${{ secrets.CHAT_API_URL }}"
+          if [ -z "$URL" ]; then
+            URL="https://nyrokume-chat-api.nyrokume.workers.dev"
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: GitHub Pages
+    needs: deploy-api
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static site
+        run: npm run build:pages
+        env:
+          NEXT_PUBLIC_CHAT_API_URL: ${{ needs.deploy-api.outputs.api_url }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy-pages:
+    name: Publish Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

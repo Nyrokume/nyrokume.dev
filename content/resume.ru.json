@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "title": "nyrokume.dev — resume",
+    "description": "Веб-разработчик. Terminal-style resume."
+  },
+  "header": {
+    "site": "nyrokume.dev",
+    "nav": [
+      { "id": "home", "label": "home", "href": "/" },
+      { "id": "about", "label": "about", "href": "/about" },
+      { "id": "skills", "label": "skills", "href": "/skills" },
+      { "id": "projects", "label": "projects", "href": "/projects" },
+      { "id": "contact", "label": "contact", "href": "/contact" }
+    ],
+    "online": "online",
+    "githubLabel": "github",
+    "githubHref": "https://github.com/Nyrokume",
+    "telegramLabel": "telegram",
+    "telegramHref": "https://t.me/nyrokume",
+    "mailLabel": "gmail",
+    "mailHref": "mailto:nyrokumework@gmail.com"
+  },
+  "hero": {
+    "windowTitle": "whoami.sh",
+    "availableBadge": "available for hire",
+    "bootLine": "// booting personality.exe...",
+    "command": "whoami",
+    "heading": "nyrokume.dev",
+    "tagline": "// в первую очередь веб — сайты и приложения в браузере. остальное подключаю, когда нужно по задаче.",
+    "stats": [
+      { "label": "skills", "value": "16", "href": "/skills" },
+      { "label": "projects", "value": "—", "href": "/projects" },
+      { "label": "status", "value": "online", "highlight": true }
+    ],
+    "actions": [
+      {
+        "id": "github",
+        "label": "github.com/Nyrokume",
+        "href": "https://github.com/Nyrokume",
+        "icon": "github"
+      },
+      {
+        "id": "connect",
+        "label": "./connect.sh",
+        "href": "mailto:nyrokumework@gmail.com?subject=Collaboration%20inquiry",
+        "icon": "mail",
+        "primary": true
+      },
+      {
+        "id": "copy",
+        "label": "copy handle",
+        "icon": "copy",
+        "copyValue": "nyrokume.dev"
+      }
+    ]
+  },
+  "about": {
+    "windowTitle": "01_about",
+    "meta": "markdown · sh",
+    "command": "cat about.md",
+    "sections": [
+      {
+        "title": "основное",
+        "items": [
+          "Делаю сайты — и простые, и большие, где много всего на странице.",
+          "Занимаюсь тем, что работает на сервере: сохранение данных, вход в аккаунт, логика сайта.",
+          "Подключаю нейросети к работе — если они правда помогают, а не для галочки."
+        ]
+      },
+      {
+        "title": "также",
+        "items": [
+          "Программы для компьютера — под Windows, Mac и Linux.",
+          "Если нужно что-то своё под задачу — могу взяться."
+        ]
+      },
+      {
+        "title": "подход",
+        "items": [
+          "Делаю то, что нужно, без лишнего.",
+          "Хотите поговорить — напишите."
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "windowTitle": "02_skills",
+    "meta": "16 items · sh",
+    "command": "ls -la ./skills/",
+    "categories": [
+      {
+        "id": "frontend",
+        "label": "frontend/",
+        "items": ["React", "TypeScript", "JS", "Vanila"]
+      },
+      {
+        "id": "backend",
+        "label": "backend/",
+        "items": ["NodeJS", "Python", "PHP", "GoLang", "SQL"]
+      },
+      {
+        "id": "systems",
+        "label": "systems/",
+        "items": ["Rust", "C++", "C#", "ZIG", "Tauri"]
+      },
+      {
+        "id": "scripting",
+        "label": "scripting/",
+        "items": ["LUA", "1C"]
+      }
+    ],
+    "footerComment": "# total 16 languages — always learning more"
+  },
+  "projects": {
+    "windowTitle": "03_projects",
+    "meta": "1 project · sh",
+    "command": "git log --oneline ./projects/",
+    "footerComment": "// больше — на github.com/Nyrokume ↗",
+    "footerHref": "https://github.com/Nyrokume",
+    "statusLabels": {
+      "active": "active",
+      "wip": "wip"
+    },
+    "items": [
+      {
+        "id": "ai-chat",
+        "slug": "./chat.sh",
+        "sideLabel": "ai chat",
+        "sideHint": "гид по сайту",
+        "description": "Встроенный чат на этой странице. Отвечает только о nyrokume.dev: разделы, навыки, проекты и контакты. Выбор провайдера и модели.",
+        "status": "active",
+        "tags": ["ai", "gemini", "groq", "openrouter"],
+        "action": "chat",
+        "actionLabel": "запустить чат"
+      }
+    ],
+    "chatCloseLabel": "закрыть",
+    "chat": {
+      "windowTitle": "ai_chat",
+      "meta": "ai · sh",
+      "command": "./chat.sh",
+      "bootLine": "// подключение к ai...",
+      "welcome": "Привет! Я гид nyrokume.dev — отвечаю только о сайте: разделы, навыки, проекты, контакты. Спросите по теме.",
+      "placeholder": "Напишите сообщение...",
+      "inputLabel": "stdin>",
+      "sendLabel": "send",
+      "sendingLabel": "sending...",
+      "thinking": "assistant печатает...",
+      "hint": "Enter — новая строка, Shift+Enter — отправить",
+      "error": "Не удалось получить ответ. Попробуйте позже.",
+      "providerLabel": "провайдер",
+      "modelLabel": "модель",
+      "defaultProvider": "gemini"
+    }
+  },
+  "contact": {
+    "windowTitle": "04_contact",
+    "meta": "bash · sh",
+    "command": "./connect.sh",
+    "handshakeLine": "# executing connection handshake...",
+    "cards": [
+      {
+        "id": "handle",
+        "icon": "handle",
+        "label": "handle",
+        "value": "nyrokume.dev",
+        "copy": true
+      },
+      {
+        "id": "telegram",
+        "icon": "telegram",
+        "label": "telegram",
+        "value": "@nyrokume",
+        "href": "https://t.me/nyrokume"
+      },
+      {
+        "id": "mail",
+        "icon": "mail",
+        "label": "work mail",
+        "value": "nyrokumework@gmail.com",
+        "href": "mailto:nyrokumework@gmail.com"
+      },
+      {
+        "id": "gh",
+        "icon": "github",
+        "label": "github",
+        "value": "github.com/Nyrokume",
+        "href": "https://github.com/Nyrokume"
+      }
+    ],
+    "echoCommand": "echo \"open for collab\"",
+    "echoOutput": "open for collab",
+    "exitLine": "process exited (0)"
+  }
+}

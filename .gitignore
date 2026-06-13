@@ -16,9 +16,13 @@
 # next.js
 /.next/
 /out/
+/app/_api_backup/
 
 # production
 /build
+
+# cursor
+.cursor/
 
 # misc
 .DS_Store
@@ -30,8 +34,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files — NEVER commit real keys
+.env
+.env.local
+.env.development
+.env.production
+.env*.local
+!.env.example
 
 # vercel
 .vercel
