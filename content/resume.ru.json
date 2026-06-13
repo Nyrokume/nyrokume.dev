@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// разрабатываю сайты и веб-приложения. остальное подключаю, когда нужно по задаче.",
     "stats": [
-      { "label": "skills", "value": "51", "href": "/skills" },
+      { "label": "skills", "value": "49", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,7 +88,7 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "51 items · sh",
+    "meta": "49 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
@@ -117,8 +117,19 @@
         "groups": [
           {
             "label": "runtimes/",
-            "hint": "языки и платформы",
-            "items": ["Node.js", "Python", "PHP", "Go", "Rust", "Java"]
+            "hint": "языки и рантаймы",
+            "items": [
+              "Node.js",
+              "Python",
+              "PHP",
+              "Go",
+              "Rust",
+              "Java",
+              "C++",
+              "C#",
+              "Zig",
+              "Lua"
+            ]
           },
           {
             "label": "databases/",
@@ -137,21 +148,18 @@
         "id": "frameworks",
         "label": "frameworks/",
         "hint": "веб и desktop",
-        "items": [
-          "Tauri",
-          "Electron",
-          "Flask",
-          "FastAPI",
-          "Laravel",
-          "Nest.js",
-          "Express.js"
+        "groups": [
+          {
+            "label": "web/",
+            "hint": "API и бэкенд",
+            "items": ["Flask", "FastAPI", "Laravel", "Nest.js", "Express.js"]
+          },
+          {
+            "label": "desktop/",
+            "hint": "кроссплатформа",
+            "items": ["Tauri", "Electron"]
+          }
         ]
-      },
-      {
-        "id": "languages",
-        "label": "languages/",
-        "hint": "системные и скриптовые",
-        "items": ["C++", "C#", "Zig", "Lua"]
       },
       {
         "id": "tools",
@@ -166,7 +174,7 @@
           {
             "label": "dev/",
             "hint": "IDE и утилиты",
-            "items": ["VS Code", "Postman", "Figma", "npm"]
+            "items": ["VS Code", "Figma"]
           }
         ]
       },

@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// web first — sites and browser apps. I add other tools when the task needs them.",
     "stats": [
-      { "label": "skills", "value": "51", "href": "/skills" },
+      { "label": "skills", "value": "49", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,7 +88,7 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "51 items · sh",
+    "meta": "49 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
@@ -117,8 +117,19 @@
         "groups": [
           {
             "label": "runtimes/",
-            "hint": "languages & platforms",
-            "items": ["Node.js", "Python", "PHP", "Go", "Rust", "Java"]
+            "hint": "languages & runtimes",
+            "items": [
+              "Node.js",
+              "Python",
+              "PHP",
+              "Go",
+              "Rust",
+              "Java",
+              "C++",
+              "C#",
+              "Zig",
+              "Lua"
+            ]
           },
           {
             "label": "databases/",
@@ -137,21 +148,18 @@
         "id": "frameworks",
         "label": "frameworks/",
         "hint": "web & desktop",
-        "items": [
-          "Tauri",
-          "Electron",
-          "Flask",
-          "FastAPI",
-          "Laravel",
-          "Nest.js",
-          "Express.js"
+        "groups": [
+          {
+            "label": "web/",
+            "hint": "API & backend",
+            "items": ["Flask", "FastAPI", "Laravel", "Nest.js", "Express.js"]
+          },
+          {
+            "label": "desktop/",
+            "hint": "cross-platform",
+            "items": ["Tauri", "Electron"]
+          }
         ]
-      },
-      {
-        "id": "languages",
-        "label": "languages/",
-        "hint": "systems & scripting",
-        "items": ["C++", "C#", "Zig", "Lua"]
       },
       {
         "id": "tools",
@@ -166,7 +174,7 @@
           {
             "label": "dev/",
             "hint": "IDE & utilities",
-            "items": ["VS Code", "Postman", "Figma", "npm"]
+            "items": ["VS Code", "Figma"]
           }
         ]
       },
@@ -176,10 +184,9 @@
         "hint": "accounting, ERP, docs",
         "items": [
           "1C:Enterprise",
-          "Accounting",
-          "Document flow",
-          "ERP",
-          "Integrations"
+          "1C:Accounting",
+          "1C:Document flow",
+          "1C:ERP"
         ]
       }
     ],

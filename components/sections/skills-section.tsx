@@ -11,10 +11,14 @@ const folderIcons: Record<string, string> = {
   backend: "◨",
   api: "◰",
   frameworks: "◮",
-  languages: "◩",
   tools: "◫",
   enterprise: "◭",
 };
+
+function categorySpansFull(category: SkillCategory): boolean {
+  if (category.groups) return true;
+  return countCategoryItems(category) > 6;
+}
 
 function SkillTags({ items }: { items: string[] }) {
   return (
@@ -22,15 +26,9 @@ function SkillTags({ items }: { items: string[] }) {
       {items.map((item) => (
         <span
           key={item}
-          className="inline-flex items-baseline rounded border border-border bg-background px-2 py-0.5 font-mono text-xs text-muted-light transition-colors hover:border-accent/40 hover:text-foreground"
+          className="rounded border border-border bg-background px-2 py-0.5 text-[11px] text-muted-light transition-colors hover:border-accent/40 hover:text-foreground"
         >
-          <span aria-hidden className="text-muted/60">
-            &quot;
-          </span>
           {item}
-          <span aria-hidden className="text-muted/60">
-            &quot;
-          </span>
         </span>
       ))}
     </div>
@@ -40,39 +38,86 @@ function SkillTags({ items }: { items: string[] }) {
 function CategoryHeader({
   category,
   itemCount,
+  entriesLabel,
 }: {
   category: SkillCategory;
   itemCount: number;
+  entriesLabel: string;
 }) {
   return (
-    <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 border-b border-border/60 pb-2 text-sm">
+    <header className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-border/60 bg-surface/70 px-3 py-2.5 sm:px-4">
       <span className="text-muted-light" aria-hidden>
         {folderIcons[category.id] ?? "▤"}
       </span>
       <span className="font-medium text-accent-bright">{category.label}</span>
       {category.hint ? (
-        <span className="text-muted">{`# ${category.hint}`}</span>
+        <span className="text-[11px] text-muted">{`# ${category.hint}`}</span>
       ) : null}
-      <span className="ml-auto text-xs tabular-nums text-muted">{itemCount}</span>
-    </div>
+      <span className="ml-auto text-[10px] tabular-nums text-muted">
+        {itemCount} {entriesLabel}
+      </span>
+    </header>
   );
 }
 
 function SkillGroupPanel({ group }: { group: SkillGroup }) {
   return (
-    <div className="rounded border border-border/80 bg-background/40 p-3">
-      <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-xs">
-        <span className="font-medium text-foreground">{group.label}</span>
-        {group.hint ? <span className="text-muted">{`# ${group.hint}`}</span> : null}
+    <div className="rounded border border-border/70 bg-background/40 p-3">
+      <div className="mb-2.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+        <span className="text-xs font-medium text-foreground">{group.label}</span>
+        {group.hint ? (
+          <span className="text-[11px] text-muted">{`# ${group.hint}`}</span>
+        ) : null}
+        <span className="ml-auto text-[10px] tabular-nums text-muted">
+          {group.items.length}
+        </span>
       </div>
       <SkillTags items={group.items} />
     </div>
   );
 }
 
+function SkillCategoryCard({
+  category,
+  entriesLabel,
+}: {
+  category: SkillCategory;
+  entriesLabel: string;
+}) {
+  const itemCount = countCategoryItems(category);
+
+  return (
+    <article className="group relative overflow-hidden rounded-lg border border-border bg-surface-elevated transition-colors hover:border-accent/30">
+      <div
+        className="absolute inset-y-0 left-0 w-0.5 bg-accent/40 transition-colors group-hover:bg-accent"
+        aria-hidden
+      />
+
+      <CategoryHeader
+        category={category}
+        itemCount={itemCount}
+        entriesLabel={entriesLabel}
+      />
+
+      <div className="p-3 sm:p-4">
+        {category.groups ? (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {category.groups.map((group) => (
+              <SkillGroupPanel key={group.label} group={group} />
+            ))}
+          </div>
+        ) : (
+          <SkillTags items={category.items ?? []} />
+        )}
+      </div>
+    </article>
+  );
+}
+
 export function SkillsSection() {
-  const { content } = useLocale();
+  const { content, locale } = useLocale();
   const { skills } = content;
+  const entriesLabel = locale === "ru" ? "зап." : "entries";
   const totalItems = skills.categories.reduce(
     (sum, category) => sum + countCategoryItems(category),
     0,
@@ -83,25 +128,14 @@ export function SkillsSection() {
       <div className="space-y-6">
         <TypewriterPrompt command={skills.command} cwd="~/skills" />
 
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {skills.categories.map((category, categoryIndex) => (
-            <TerminalReveal key={category.id} delay={450 + categoryIndex * 100}>
-              <div className="rounded border border-border bg-surface-elevated/50 p-4">
-                <CategoryHeader
-                  category={category}
-                  itemCount={countCategoryItems(category)}
-                />
-
-                {category.groups ? (
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {category.groups.map((group) => (
-                      <SkillGroupPanel key={group.label} group={group} />
-                    ))}
-                  </div>
-                ) : (
-                  <SkillTags items={category.items ?? []} />
-                )}
-              </div>
+            <TerminalReveal
+              key={category.id}
+              delay={450 + categoryIndex * 100}
+              className={categorySpansFull(category) ? "md:col-span-2" : undefined}
+            >
+              <SkillCategoryCard category={category} entriesLabel={entriesLabel} />
             </TerminalReveal>
           ))}
         </div>
