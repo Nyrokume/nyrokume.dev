@@ -32,16 +32,34 @@ const DEFAULT_KEYWORDS = [
   "AI integrations",
 ];
 
-export function getSiteUrl(): string {
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (fromEnv) return fromEnv;
+/** GitHub Pages project-site prefix, e.g. `/nyrokume.dev`. Empty locally. */
+export function getBasePath(): string {
+  if (process.env.GITHUB_PAGES !== "true") {
+    return "";
+  }
 
+  const repo = process.env.GITHUB_PAGES_REPO ?? "nyrokume.dev";
+  return `/${repo}`;
+}
+
+export function getSiteUrl(): string {
   if (process.env.GITHUB_PAGES === "true") {
     const repo = process.env.GITHUB_PAGES_REPO ?? "nyrokume.dev";
     return `https://nyrokume.github.io/${repo}`;
   }
 
-  return "https://nyrokume.github.io/nyrokume.dev";
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (fromEnv) {
+    return fromEnv;
+  }
+
+  return "http://localhost:3000";
+}
+
+/** Root-relative asset path with optional GitHub Pages basePath. */
+export function assetPath(path: string): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${getBasePath()}${normalized}`;
 }
 
 export function normalizePath(path: string): string {
@@ -57,7 +75,14 @@ export function normalizePath(path: string): string {
 }
 
 export function absoluteUrl(path: string): string {
-  return new URL(normalizePath(path), `${getSiteUrl()}/`).toString();
+  const base = getSiteUrl().replace(/\/$/, "");
+  const normalized = normalizePath(path);
+
+  if (normalized === "/") {
+    return `${base}/`;
+  }
+
+  return `${base}${normalized}`;
 }
 
 type PageSeo = {
@@ -69,29 +94,42 @@ export const PAGE_SEO: Record<keyof typeof routes, PageSeo> = {
   home: {
     title: "nyrokume.dev — веб-разработчик",
     description:
-      "Портфолио nyrokume.dev: фронтенд (React, Next.js), бэкенд (Node.js, Python, Go), AI-интеграции. Terminal-style resume.",
+      "Портфолио Nyrokume: сайты и веб-приложения, React, Next.js, backend, AI-интеграции. Terminal-style resume.",
   },
   about: {
     title: "about — nyrokume.dev",
     description:
-      "О nyrokume.dev: фронтенд, бэкенд, интеграции, десктоп и AI-автоматизации — подробнее о подходе и стеке.",
+      "О Nyrokume: фронтенд, бэкенд, интеграции, десктоп и AI — подход и стек автора nyrokume.dev.",
   },
   skills: {
     title: "skills — nyrokume.dev",
     description:
-      "Стек nyrokume.dev: HTML, CSS, JavaScript, TypeScript, React, Next.js, Node.js, Python, Go, Docker и другие навыки.",
+      "49 навыков Nyrokume: frontend, backend, API, frameworks, tools — полный стек на nyrokume.dev/skills.",
   },
   projects: {
     title: "projects — nyrokume.dev",
     description:
-      "Проекты nyrokume.dev: AI-чат ./chat.sh — гид по сайту с выбором провайдера и модели.",
+      "Проекты nyrokume.dev: AI-ассистент ./chat.sh — ответы о сайте и авторе.",
   },
   contact: {
     title: "contact — nyrokume.dev",
     description:
-      "Связаться с nyrokume.dev: GitHub, Telegram, email — открыт к предложениям.",
+      "Связаться с Nyrokume: GitHub, Telegram, email — открыт к предложениям.",
   },
 };
+
+function buildSocialImages(title: string) {
+  const url = absoluteUrl("/icon.svg");
+
+  return {
+    openGraph: {
+      images: [{ url, width: 32, height: 32, alt: title, type: "image/svg+xml" }],
+    },
+    twitter: {
+      images: [url],
+    },
+  };
+}
 
 export function buildPageMetadata(
   page: keyof typeof routes,
@@ -100,6 +138,7 @@ export function buildPageMetadata(
   const seo = { ...PAGE_SEO[page], ...overrides };
   const path = routes[page];
   const url = absoluteUrl(path);
+  const social = buildSocialImages(seo.title);
 
   return {
     title: seo.title,
@@ -116,18 +155,22 @@ export function buildPageMetadata(
       locale: "ru_RU",
       alternateLocale: ["en_US"],
       type: "website",
+      ...social.openGraph,
     },
     twitter: {
       card: "summary",
       title: seo.title,
       description: seo.description,
       creator: `@${SITE_HANDLE.toLowerCase()}`,
+      ...social.twitter,
     },
   };
 }
 
 export function buildRootMetadata(): Metadata {
   const home = buildPageMetadata("home");
+  const iconPath = assetPath("/icon.svg");
+  const appleIconPath = assetPath("/apple-icon.svg");
 
   return {
     metadataBase: new URL(`${getSiteUrl()}/`),
@@ -149,12 +192,9 @@ export function buildRootMetadata(): Metadata {
     ...home,
     title: PAGE_SEO.home.title,
     icons: {
-      icon: [
-        { url: "/icon.svg", type: "image/svg+xml" },
-        { url: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
-      ],
-      apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
-      shortcut: [{ url: "/icon.svg", type: "image/svg+xml" }],
+      icon: [{ url: iconPath, type: "image/svg+xml", sizes: "any" }],
+      apple: [{ url: appleIconPath, type: "image/svg+xml", sizes: "180x180" }],
+      shortcut: [{ url: iconPath, type: "image/svg+xml" }],
     },
   };
 }
@@ -163,7 +203,8 @@ export function buildPersonJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: SITE_NAME,
+    name: SITE_HANDLE,
+    alternateName: SITE_NAME,
     url: absoluteUrl("/"),
     email: SITE_EMAIL,
     sameAs: [SITE_GITHUB, SITE_TELEGRAM],

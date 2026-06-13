@@ -97,7 +97,6 @@ function ProjectCard({
 }) {
   const isActive = project.status === "active";
   const isChat = project.action === "chat";
-  const permissions = isChat ? "-rwxr-xr-x" : "-rw-r--r--";
 
   return (
     <article className="overflow-hidden rounded border border-border bg-surface-elevated text-sm">
@@ -122,9 +121,6 @@ function ProjectCard({
         <div className="min-w-0 flex-1 p-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex min-w-0 items-center gap-1.5">
-              <span className="text-terminal-success shrink-0 text-[10px]" aria-hidden>
-                {permissions}
-              </span>
               <svg
                 viewBox="0 0 24 24"
                 className="h-3.5 w-3.5 shrink-0 fill-none stroke-current text-muted"
