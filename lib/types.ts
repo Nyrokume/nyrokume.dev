@@ -29,6 +29,7 @@ export type ChatConfig = {
   thinking: string;
   hint: string;
   error: string;
+  unavailable: string;
   providerLabel: string;
   modelLabel: string;
   defaultProvider: string;

@@ -24,6 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Ensure workers.dev subdomain
+        continue-on-error: true
+        run: |
+          curl -sf -X PUT \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/subdomain" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"subdomain":"nyrokume"}'
+
       - name: Deploy worker
         continue-on-error: true
         uses: cloudflare/wrangler-action@v3
@@ -67,6 +76,7 @@ jobs:
       - name: Build static site
         run: npm run build:pages
         env:
+          NEXT_PUBLIC_SITE_URL: https://nyrokume.github.io/nyrokume.dev
           NEXT_PUBLIC_CHAT_API_URL: ${{ needs.deploy-api.outputs.api_url }}
 
       - uses: actions/upload-pages-artifact@v3

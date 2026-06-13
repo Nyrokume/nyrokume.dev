@@ -77,10 +77,12 @@ export function ChatSection({ chat }: ChatSectionProps) {
         }),
       });
 
-      const data = (await response.json()) as {
-        message?: ChatMessage;
-        error?: string;
-      };
+      let data: { message?: ChatMessage; error?: string };
+      try {
+        data = (await response.json()) as typeof data;
+      } catch {
+        throw new Error(chat.unavailable);
+      }
 
       if (!response.ok) {
         throw new Error(data.error ?? chat.error);
@@ -92,7 +94,12 @@ export function ChatSection({ chat }: ChatSectionProps) {
 
       setMessages([...nextMessages, data.message]);
     } catch (sendError) {
-      setError(sendError instanceof Error ? sendError.message : chat.error);
+      const raw = sendError instanceof Error ? sendError.message : chat.error;
+      const message =
+        raw === "Failed to fetch" || raw.includes("NetworkError")
+          ? chat.unavailable
+          : raw;
+      setError(message);
     } finally {
       setLoading(false);
       inputRef.current?.focus();

@@ -148,6 +148,7 @@
       "thinking": "assistant is typing...",
       "hint": "Enter for new line, Shift+Enter to send",
       "error": "Could not get a response. Please try again later.",
+      "unavailable": "Chat is temporarily unavailable — server not responding. Try again in a minute.",
       "providerLabel": "model",
       "modelLabel": "model",
       "defaultProvider": "gemini"

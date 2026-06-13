@@ -1,6 +1,8 @@
 import { JetBrains_Mono } from "next/font/google";
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
+import { SeoJsonLd } from "@/components/seo/seo-json-ld";
 import { LocaleProvider } from "@/components/providers/locale-provider";
+import { buildRootMetadata } from "@/lib/seo";
 import "./globals.css";
 
 const jetbrains = JetBrains_Mono({
@@ -9,19 +11,13 @@ const jetbrains = JetBrains_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "nyrokume.dev — resume",
-  description: "Web developer. Terminal-style resume.",
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
-  },
-};
+export const metadata = buildRootMetadata();
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -32,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${jetbrains.variable} h-full`}>
       <body className="min-h-full bg-background text-foreground antialiased">
+        <SeoJsonLd />
         <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>

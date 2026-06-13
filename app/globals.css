@@ -20,6 +20,9 @@
   --border: #1f1f1f;
   --border-subtle: #141414;
   --border-accent: #ff6b2b40;
+  --scrollbar-track: #000000;
+  --scrollbar-thumb: #ff6b2b;
+  --scrollbar-thumb-hover: #ff8533;
 }
 
 @theme inline {
@@ -46,6 +49,8 @@
 
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 html {
@@ -68,6 +73,31 @@ body {
 ::selection {
   background: var(--accent-muted);
   color: var(--foreground);
+}
+
+/* Scrollbar — чёрная дорожка, оранжевый ползунок (accent) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  border: 2px solid var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
 }
 
 nextjs-portal {
@@ -113,6 +143,11 @@ nextjs-portal {
 
 .scrollbar-none::-webkit-scrollbar {
   display: none;
+}
+
+.scrollbar-none,
+.scrollbar-none * {
+  scrollbar-width: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
