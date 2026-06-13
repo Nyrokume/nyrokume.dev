@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy worker
-        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        continue-on-error: true
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
