@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "nyrokume.dev — resume",
-    "description": "Web developer. Terminal-style resume."
+    "title": "nyrokume.dev — web developer",
+    "description": "Web developer portfolio: frontend, backend, AI integrations. Terminal-style resume."
   },
   "header": {
     "site": "nyrokume.dev",
@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// web first — sites and browser apps. I add other tools when the task needs them.",
     "stats": [
-      { "label": "skills", "value": "16", "href": "/skills" },
+      { "label": "skills", "value": "28", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -62,54 +62,84 @@
       {
         "title": "main",
         "items": [
-          "I build websites — simple ones and bigger ones with lots going on.",
-          "I handle the server side: saving data, sign-in, and how the site actually works.",
-          "I add AI to workflows when it genuinely helps, not just for show."
+          "Frontend: layout and interfaces — landing pages, SPAs, dashboards and admin panels. HTML, CSS, JavaScript, TypeScript, React, Next.js, responsive UI and motion.",
+          "Backend: REST/GraphQL APIs, auth, roles, databases, cache and background jobs. Node.js, Python, Go, PHP — stack chosen per project.",
+          "Integrations: payments, email, webhooks, CRM and third-party APIs when services need to talk to each other.",
+          "AI for automation: chatbots, classification, text generation — only when it saves time or cost vs doing it manually."
         ]
       },
       {
         "title": "also",
         "items": [
-          "Computer programs for Windows, Mac, and Linux.",
-          "If you need something custom for your task — I can take it on."
+          "Desktop: Tauri, Electron — when you need an app outside the browser on Windows, macOS or Linux.",
+          "Systems & native: Rust, C++, C# — when performance or low-level work matters.",
+          "Legacy & niche: 1C, Lua — when it is already in the project or solves a specific task fast."
         ]
       },
       {
         "title": "approach",
         "items": [
-          "I do what’s needed, nothing extra.",
-          "Want to talk? Just message me."
+          "Understand the task and MVP first, then grow — no bloat or checkbox features.",
+          "Document key decisions, keep code readable, deliver something maintainable.",
+          "Reach out via Contact — we will discuss the task, timeline and find a solution."
         ]
       }
     ]
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "16 items · sh",
+    "meta": "28 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
         "id": "frontend",
         "label": "frontend/",
-        "items": ["React", "TypeScript", "JS", "Vanila"]
+        "hint": "UI & markup",
+        "items": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Next.js",
+          "Tailwind CSS",
+          "Vite"
+        ]
       },
       {
         "id": "backend",
         "label": "backend/",
-        "items": ["NodeJS", "Python", "PHP", "GoLang", "SQL"]
+        "hint": "server & data",
+        "items": [
+          "Node.js",
+          "Python",
+          "PHP",
+          "Go",
+          "PostgreSQL",
+          "Redis",
+          "REST API"
+        ]
+      },
+      {
+        "id": "tools",
+        "label": "tools/",
+        "hint": "infra & workflow",
+        "items": ["Git", "Docker", "Linux", "Nginx", "Figma"]
       },
       {
         "id": "systems",
         "label": "systems/",
-        "items": ["Rust", "C++", "C#", "ZIG", "Tauri"]
+        "hint": "desktop & native",
+        "items": ["Rust", "C++", "C#", "Zig", "Tauri"]
       },
       {
-        "id": "scripting",
-        "label": "scripting/",
-        "items": ["LUA", "1C"]
+        "id": "other",
+        "label": "other/",
+        "hint": "niche & AI",
+        "items": ["Lua", "1C", "AI API"]
       }
     ],
-    "footerComment": "# total 16 languages — always learning more"
+    "footerComment": "# total {total} skills — always learning more"
   },
   "projects": {
     "windowTitle": "03_projects",

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "nyrokume.dev — resume",
-    "description": "Веб-разработчик. Terminal-style resume."
+    "title": "nyrokume.dev — веб-разработчик",
+    "description": "Портфолио веб-разработчика: фронтенд, бэкенд, AI-интеграции. Terminal-style resume."
   },
   "header": {
     "site": "nyrokume.dev",
@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// разрабатываю сайты и веб-приложения. остальное подключаю, когда нужно по задаче.",
     "stats": [
-      { "label": "skills", "value": "16", "href": "/skills" },
+      { "label": "skills", "value": "28", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -62,54 +62,84 @@
       {
         "title": "основное",
         "items": [
-          "Фронт: сайты и веб-приложения — от лендингов до сложных интерфейсов.",
-          "Бэкенд: базы, авторизация, API и серверная логика.",
-          "Подключаю AI для автоматизаций — только когда это действительно необходимо."
+          "Фронтенд: вёрстка и интерфейсы — лендинги, SPA, личные кабинеты и админки. HTML, CSS, JavaScript, TypeScript, React, Next.js, адаптив и анимации.",
+          "Бэкенд: REST/GraphQL API, авторизация, роли, базы данных, кэш и фоновые задачи. Node.js, Python, Go, PHP — выбираю стек под проект.",
+          "Интеграции: платежи, почта, webhooks, CRM и сторонние API — подключаю, когда нужно связать сервисы между собой.",
+          "AI для автоматизаций: чат-боты, классификация, генерация текстов — только если без этого дольше или дороже, чем с ним."
         ]
       },
       {
         "title": "также",
         "items": [
-          "Десктопные приложения — Windows, macOS, Linux.",
-          "Нестандартные задачи — обсудим и сделаем."
+          "Десктоп: Tauri, Electron — когда нужно приложение вне браузера под Windows, macOS или Linux.",
+          "Системное и низкоуровневое: Rust, C++, C# — если задача требует производительности или работы с железом.",
+          "Legacy и нишевое: 1C, Lua — если уже есть в проекте или нужно быстро закрыть конкретную задачу."
         ]
       },
       {
         "title": "подход",
         "items": [
-          "Только нужное — без лишних фич и воды.",
-          "Пишите в Contact — обсудим задачу и найдём решение."
+          "Сначала разбираю задачу и MVP, потом наращиваю — без лишнего кода и фич ради галочки.",
+          "Документирую ключевые решения, держу код читаемым, сдаю то, что можно поддерживать.",
+          "Пишите в Contact — обсудим задачу, сроки и найдём решение."
         ]
       }
     ]
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "16 items · sh",
+    "meta": "28 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
         "id": "frontend",
         "label": "frontend/",
-        "items": ["React", "TypeScript", "JS", "Vanila"]
+        "hint": "интерфейсы и вёрстка",
+        "items": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Next.js",
+          "Tailwind CSS",
+          "Vite"
+        ]
       },
       {
         "id": "backend",
         "label": "backend/",
-        "items": ["NodeJS", "Python", "PHP", "GoLang", "SQL"]
+        "hint": "сервер и данные",
+        "items": [
+          "Node.js",
+          "Python",
+          "PHP",
+          "Go",
+          "PostgreSQL",
+          "Redis",
+          "REST API"
+        ]
+      },
+      {
+        "id": "tools",
+        "label": "tools/",
+        "hint": "инфра и workflow",
+        "items": ["Git", "Docker", "Linux", "Nginx", "Figma"]
       },
       {
         "id": "systems",
         "label": "systems/",
-        "items": ["Rust", "C++", "C#", "ZIG", "Tauri"]
+        "hint": "десктоп и native",
+        "items": ["Rust", "C++", "C#", "Zig", "Tauri"]
       },
       {
-        "id": "scripting",
-        "label": "scripting/",
-        "items": ["LUA", "1C"]
+        "id": "other",
+        "label": "other/",
+        "hint": "ниша и AI",
+        "items": ["Lua", "1C", "AI API"]
       }
     ],
-    "footerComment": "# total 16 languages — always learning more"
+    "footerComment": "# total {total} skills — always learning more"
   },
   "projects": {
     "windowTitle": "03_projects",

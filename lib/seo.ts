@@ -14,12 +14,22 @@ const DEFAULT_KEYWORDS = [
   "web developer",
   "frontend",
   "backend",
-  "React",
+  "HTML",
+  "CSS",
+  "JavaScript",
   "TypeScript",
+  "React",
   "Next.js",
+  "Tailwind CSS",
+  "Node.js",
+  "Python",
+  "Go",
+  "PostgreSQL",
+  "Docker",
   "portfolio",
   "resume",
   "terminal portfolio",
+  "AI integrations",
 ];
 
 export function getSiteUrl(): string {
@@ -59,22 +69,22 @@ export const PAGE_SEO: Record<keyof typeof routes, PageSeo> = {
   home: {
     title: "nyrokume.dev — веб-разработчик",
     description:
-      "Портфолио nyrokume.dev: сайты и веб-приложения, бэкенд, AI. Terminal-style resume — React, TypeScript, Node.js.",
+      "Портфолио nyrokume.dev: фронтенд (React, Next.js), бэкенд (Node.js, Python, Go), AI-интеграции. Terminal-style resume.",
   },
   about: {
     title: "about — nyrokume.dev",
     description:
-      "О создателе nyrokume.dev: фронт, бэкенд, десктоп и AI в проектах — когда это реально помогает.",
+      "О nyrokume.dev: фронтенд, бэкенд, интеграции, десктоп и AI-автоматизации — подробнее о подходе и стеке.",
   },
   skills: {
     title: "skills — nyrokume.dev",
     description:
-      "Навыки nyrokume.dev: React, TypeScript, Node.js, Python, Go, SQL и инструменты разработки.",
+      "Стек nyrokume.dev: HTML, CSS, JavaScript, TypeScript, React, Next.js, Node.js, Python, Go, Docker и другие навыки.",
   },
   projects: {
     title: "projects — nyrokume.dev",
     description:
-      "Проекты nyrokume.dev: AI-чат ./chat.sh и другие работы веб-разработчика.",
+      "Проекты nyrokume.dev: AI-чат ./chat.sh — гид по сайту с выбором провайдера и модели.",
   },
   contact: {
     title: "contact — nyrokume.dev",
@@ -139,7 +149,10 @@ export function buildRootMetadata(): Metadata {
     ...home,
     title: PAGE_SEO.home.title,
     icons: {
-      icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+      icon: [
+        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
+      ],
       apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
       shortcut: [{ url: "/icon.svg", type: "image/svg+xml" }],
     },
@@ -155,7 +168,20 @@ export function buildPersonJsonLd() {
     email: SITE_EMAIL,
     sameAs: [SITE_GITHUB, SITE_TELEGRAM],
     jobTitle: "Web Developer",
-    knowsAbout: ["Web Development", "React", "TypeScript", "Node.js", "Python"],
+    knowsAbout: [
+      "Web Development",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Python",
+      "Go",
+      "Docker",
+      "AI integrations",
+    ],
   };
 }
 

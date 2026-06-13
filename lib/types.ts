@@ -64,6 +64,7 @@ export type HeroAction = {
 export type SkillCategory = {
   id: string;
   label: string;
+  hint?: string;
   items: string[];
 };
 
