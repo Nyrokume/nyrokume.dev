@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Terminal">
-  <rect width="32" height="32" rx="6" fill="#0d0d0d"/>
-  <rect x="2" y="2" width="28" height="28" rx="5" fill="none" stroke="#ff6b2b" stroke-width="1.5"/>
-  <rect x="2" y="2" width="28" height="7" rx="5" fill="#141414"/>
-  <rect x="2" y="6" width="28" height="3" fill="#141414"/>
-  <circle cx="6.5" cy="5.5" r="1.2" fill="#ff6b2b"/>
-  <circle cx="10.5" cy="5.5" r="1.2" fill="#5c5c5c"/>
-  <circle cx="14.5" cy="5.5" r="1.2" fill="#5c5c5c"/>
-  <path d="M6 14.5 9.5 17 6 19.5" fill="none" stroke="#ff6b2b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="12" y="16.2" width="10" height="1.6" rx="0.8" fill="#8a8a8a"/>
-  <rect x="6" y="22.5" width="14" height="1.4" rx="0.7" fill="#1f1f1f"/>
-  <rect x="6" y="25.5" width="10" height="1.4" rx="0.7" fill="#1f1f1f"/>
+  <rect width="32" height="32" rx="8" fill="#0a0a0a"/>
+  <rect x="2" y="2" width="28" height="28" rx="7" fill="none" stroke="#ff6b2b" stroke-width="0.75" opacity="0.28"/>
+  <rect x="4" y="4" width="24" height="24" rx="5" fill="#0d0d0d" stroke="#ff6b2b" stroke-width="1.5"/>
+  <path fill="#141414" d="M4 8.5C4 6.29 5.79 4.5 8 4.5h16c2.21 0 4 1.79 4 4V10H4V8.5Z"/>
+  <line x1="4" y1="10" x2="28" y2="10" stroke="#262626" stroke-width="0.5"/>
+  <circle cx="7.5" cy="7" r="1.1" fill="#ff6b2b"/>
+  <circle cx="11" cy="7" r="1.1" fill="#3a3a3a"/>
+  <circle cx="14.5" cy="7" r="1.1" fill="#3a3a3a"/>
+  <path d="M7 17.5 10.5 20.5 7 23.5" fill="none" stroke="#ff8533" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="12.5" y="18.5" width="2.75" height="3.25" rx="0.6" fill="#ff6b2b"/>
 </svg>
