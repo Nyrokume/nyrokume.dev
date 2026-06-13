@@ -61,11 +61,18 @@ export type HeroAction = {
   copyValue?: string;
 };
 
+export type SkillGroup = {
+  label: string;
+  hint?: string;
+  items: string[];
+};
+
 export type SkillCategory = {
   id: string;
   label: string;
   hint?: string;
-  items: string[];
+  items?: string[];
+  groups?: SkillGroup[];
 };
 
 export type ProjectAction = "link" | "chat";

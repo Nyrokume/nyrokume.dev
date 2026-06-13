@@ -1,4 +1,5 @@
 import { getContent } from "@/lib/i18n";
+import { getCategoryItems } from "@/lib/skills";
 import type { Locale, ResumeContent } from "@/lib/types";
 
 const CREATOR = {
@@ -65,7 +66,7 @@ function formatAbout(content: ResumeContent): string {
 
 function formatSkills(content: ResumeContent): string {
   return content.skills.categories
-    .map((category) => `${category.label} ${category.items.join(", ")}`)
+    .map((category) => `${category.label} ${getCategoryItems(category).join(", ")}`)
     .join("\n");
 }
 

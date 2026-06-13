@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// web first — sites and browser apps. I add other tools when the task needs them.",
     "stats": [
-      { "label": "skills", "value": "39", "href": "/skills" },
+      { "label": "skills", "value": "51", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,20 +88,24 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "39 items · sh",
+    "meta": "51 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
         "id": "frontend",
         "label": "frontend/",
-        "hint": "UI & markup",
+        "hint": "browser, UI, SSR",
         "items": [
           "HTML",
           "CSS",
           "JavaScript",
           "TypeScript",
           "React",
+          "Angular",
+          "Vue.js",
+          "Svelte",
           "Next.js",
+          "Nuxt.js",
           "Tailwind CSS",
           "Vite"
         ]
@@ -109,54 +113,67 @@
       {
         "id": "backend",
         "label": "backend/",
-        "hint": "server & API",
-        "items": ["Node.js", "Python", "PHP", "Go", "Rust", "REST API"]
+        "hint": "server-side",
+        "groups": [
+          {
+            "label": "runtimes/",
+            "hint": "languages & platforms",
+            "items": ["Node.js", "Python", "PHP", "Go", "Rust", "Java"]
+          },
+          {
+            "label": "databases/",
+            "hint": "SQL & NoSQL",
+            "items": ["PostgreSQL", "MySQL", "SQLite", "MongoDB"]
+          }
+        ]
       },
       {
-        "id": "database",
-        "label": "database/",
-        "hint": "SQL & storage",
-        "items": ["PostgreSQL", "MySQL", "SQLite"]
+        "id": "api",
+        "label": "api/",
+        "hint": "exchange protocols",
+        "items": ["REST API", "GraphQL", "WebSocket", "Webhook"]
       },
       {
-        "id": "tools",
-        "label": "tools/",
-        "hint": "infra & workflow",
+        "id": "frameworks",
+        "label": "frameworks/",
+        "hint": "web & desktop",
         "items": [
-          "Git",
-          "GitHub Actions",
-          "Docker",
-          "Linux",
-          "Nginx",
-          "Bash",
-          "VS Code",
-          "Postman",
-          "Figma",
-          "npm"
+          "Tauri",
+          "Electron",
+          "Flask",
+          "FastAPI",
+          "Laravel",
+          "Nest.js",
+          "Express.js"
         ]
       },
       {
         "id": "languages",
         "label": "languages/",
-        "hint": "programming languages",
+        "hint": "systems & scripting",
         "items": ["C++", "C#", "Zig", "Lua"]
       },
       {
-        "id": "frameworks",
-        "label": "frameworks/",
-        "hint": "frameworks & platforms",
-        "items": ["Tauri", "Electron"]
-      },
-      {
-        "id": "api",
-        "label": "api/",
-        "hint": "integrations & AI",
-        "items": ["AI API"]
+        "id": "tools",
+        "label": "tools/",
+        "hint": "deploy, CI/CD, environment",
+        "groups": [
+          {
+            "label": "deploy/",
+            "hint": "server & CI",
+            "items": ["Docker", "Linux", "Nginx", "Git", "GitHub Actions", "Bash"]
+          },
+          {
+            "label": "dev/",
+            "hint": "IDE & utilities",
+            "items": ["VS Code", "Postman", "Figma", "npm"]
+          }
+        ]
       },
       {
         "id": "enterprise",
         "label": "1c/",
-        "hint": "accounting & ERP",
+        "hint": "accounting, ERP, docs",
         "items": [
           "1C:Enterprise",
           "Accounting",
