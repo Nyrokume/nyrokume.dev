@@ -221,7 +221,7 @@
       "meta": "ai · sh",
       "command": "./chat.sh",
       "bootLine": "// connecting to ai...",
-      "welcome": "Hi! I'm the nyrokume.dev assistant — I can help with the site's sections, the author's skills, projects, and contacts. What would you like to know?",
+      "welcome": "Hi! I'm the nyrokume.dev assistant — ask about the site and the author, or throw me a simple task to solve.",
       "placeholder": "Type a message...",
       "inputLabel": "stdin>",
       "sendLabel": "send",
