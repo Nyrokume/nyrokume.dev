@@ -24,6 +24,7 @@ const IGNORE_FILES = new Set([
   ".env",
   ".env.production",
   ".env.development",
+  ".env.example",
 ]);
 
 const SECRET_PATTERNS = [
