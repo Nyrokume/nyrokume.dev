@@ -116,19 +116,36 @@
         "id": "database",
         "label": "database/",
         "hint": "SQL & storage",
-        "items": ["PostgreSQL", "MySQL", "SQLite", "Redis"]
+        "items": ["PostgreSQL", "MySQL", "SQLite"]
       },
       {
         "id": "tools",
         "label": "tools/",
         "hint": "infra & workflow",
-        "items": ["Git", "Docker", "Linux", "Nginx", "Figma"]
+        "items": [
+          "Git",
+          "GitHub Actions",
+          "Docker",
+          "Linux",
+          "Nginx",
+          "Bash",
+          "VS Code",
+          "Postman",
+          "Figma",
+          "npm"
+        ]
       },
       {
-        "id": "systems",
-        "label": "systems/",
-        "hint": "desktop & native",
-        "items": ["C++", "C#", "Zig", "Tauri"]
+        "id": "languages",
+        "label": "languages/",
+        "hint": "programming languages",
+        "items": ["C++", "C#", "Zig", "Lua"]
+      },
+      {
+        "id": "frameworks",
+        "label": "frameworks/",
+        "hint": "frameworks & platforms",
+        "items": ["Tauri", "Electron", "Express", "FastAPI"]
       },
       {
         "id": "enterprise",
@@ -140,7 +157,7 @@
         "id": "other",
         "label": "other/",
         "hint": "scripts & AI",
-        "items": ["Lua", "AI API"]
+        "items": ["AI API"]
       }
     ],
     "footerComment": "# total {total} skills — always learning more"

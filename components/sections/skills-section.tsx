@@ -9,7 +9,8 @@ const folderIcons: Record<string, string> = {
   backend: "◨",
   database: "◬",
   tools: "◫",
-  systems: "◩",
+  languages: "◩",
+  frameworks: "◮",
   enterprise: "◭",
   other: "◪",
 };
