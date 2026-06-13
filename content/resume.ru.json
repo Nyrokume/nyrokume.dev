@@ -216,6 +216,7 @@
       }
     ],
     "chatCloseLabel": "закрыть",
+    "backToListLabel": "← к списку",
     "chat": {
       "windowTitle": "ai_chat",
       "meta": "ai · sh",

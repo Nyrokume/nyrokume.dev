@@ -216,6 +216,7 @@
       }
     ],
     "chatCloseLabel": "close",
+    "backToListLabel": "← back to list",
     "chat": {
       "windowTitle": "ai_chat",
       "meta": "ai · sh",

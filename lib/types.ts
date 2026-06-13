@@ -145,6 +145,7 @@ export type ResumeContent = {
     footerComment: string;
     footerHref: string;
     chatCloseLabel: string;
+    backToListLabel: string;
     statusLabels: Record<ProjectItem["status"], string>;
     items: ProjectItem[];
     chat: ChatConfig;
