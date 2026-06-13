@@ -7,8 +7,10 @@ import { TerminalWindow } from "@/components/ui/terminal-window";
 const folderIcons: Record<string, string> = {
   frontend: "◧",
   backend: "◨",
+  database: "◬",
   tools: "◫",
   systems: "◩",
+  enterprise: "◭",
   other: "◪",
 };
 

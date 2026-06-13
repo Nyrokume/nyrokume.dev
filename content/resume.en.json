@@ -28,7 +28,7 @@
     "heading": "nyrokume.dev",
     "tagline": "// web first — sites and browser apps. I add other tools when the task needs them.",
     "stats": [
-      { "label": "skills", "value": "28", "href": "/skills" },
+      { "label": "skills", "value": "30", "href": "/skills" },
       { "label": "projects", "value": "—", "href": "/projects" },
       { "label": "status", "value": "online", "highlight": true }
     ],
@@ -88,7 +88,7 @@
   },
   "skills": {
     "windowTitle": "02_skills",
-    "meta": "28 items · sh",
+    "meta": "30 items · sh",
     "command": "ls -la ./skills/",
     "categories": [
       {
@@ -109,16 +109,14 @@
       {
         "id": "backend",
         "label": "backend/",
-        "hint": "server & data",
-        "items": [
-          "Node.js",
-          "Python",
-          "PHP",
-          "Go",
-          "PostgreSQL",
-          "Redis",
-          "REST API"
-        ]
+        "hint": "server & API",
+        "items": ["Node.js", "Python", "PHP", "Go", "Rust", "REST API"]
+      },
+      {
+        "id": "database",
+        "label": "database/",
+        "hint": "SQL & storage",
+        "items": ["PostgreSQL", "MySQL", "SQLite", "Redis"]
       },
       {
         "id": "tools",
@@ -130,13 +128,19 @@
         "id": "systems",
         "label": "systems/",
         "hint": "desktop & native",
-        "items": ["Rust", "C++", "C#", "Zig", "Tauri"]
+        "items": ["C++", "C#", "Zig", "Tauri"]
+      },
+      {
+        "id": "enterprise",
+        "label": "1c/",
+        "hint": "accounting & ERP",
+        "items": ["1C"]
       },
       {
         "id": "other",
         "label": "other/",
-        "hint": "niche & AI",
-        "items": ["Lua", "1C", "AI API"]
+        "hint": "scripts & AI",
+        "items": ["Lua", "AI API"]
       }
     ],
     "footerComment": "# total {total} skills — always learning more"
