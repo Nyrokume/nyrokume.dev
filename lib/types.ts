@@ -59,6 +59,7 @@ export type HeroAction = {
   icon: "github" | "mail" | "copy" | "chat";
   primary?: boolean;
   copyValue?: string;
+  behavior?: "openChat";
 };
 
 export type SkillGroup = {

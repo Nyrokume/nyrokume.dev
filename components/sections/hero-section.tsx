@@ -12,7 +12,13 @@ import {
 import { TerminalWindow } from "@/components/ui/terminal-window";
 import type { HeroAction } from "@/lib/types";
 
-export function HeroSection() {
+export function HeroSection({
+  onOpenChat,
+  chatOpen = false,
+}: {
+  onOpenChat?: () => void;
+  chatOpen?: boolean;
+}) {
   const { content } = useLocale();
   const { hero } = content;
 
@@ -63,7 +69,12 @@ export function HeroSection() {
           transition={{ duration: 0.45, delay: 1.1 }}
         >
           {hero.actions.map((action) => (
-            <HeroActionButton key={action.id} action={action} />
+            <HeroActionButton
+              key={action.id}
+              action={action}
+              onOpenChat={onOpenChat}
+              chatOpen={chatOpen}
+            />
           ))}
         </motion.div>
       </div>
@@ -71,7 +82,15 @@ export function HeroSection() {
   );
 }
 
-function HeroActionButton({ action }: { action: HeroAction }) {
+function HeroActionButton({
+  action,
+  onOpenChat,
+  chatOpen = false,
+}: {
+  action: HeroAction;
+  onOpenChat?: () => void;
+  chatOpen?: boolean;
+}) {
   const [copied, setCopied] = useState(false);
 
   const baseClass =
@@ -114,6 +133,19 @@ function HeroActionButton({ action }: { action: HeroAction }) {
       >
         {icon}
         {copied ? "copied!" : action.label}
+      </button>
+    );
+  }
+
+  if (action.behavior === "openChat" && onOpenChat) {
+    const activeClass = chatOpen
+      ? `${baseClass} border-accent/50 bg-accent-muted/30 text-foreground`
+      : className;
+
+    return (
+      <button type="button" className={activeClass} onClick={onOpenChat}>
+        {icon}
+        {action.label}
       </button>
     );
   }

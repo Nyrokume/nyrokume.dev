@@ -12,9 +12,10 @@ import type { ChatConfig } from "@/lib/types";
 
 type ChatSectionProps = {
   chat: ChatConfig;
+  cwd?: string;
 };
 
-export function ChatSection({ chat }: ChatSectionProps) {
+export function ChatSection({ chat, cwd = "~/projects" }: ChatSectionProps) {
   const { locale } = useLocale();
   const providers = buildChatProviders(locale);
   const initialProvider =
@@ -116,7 +117,7 @@ export function ChatSection({ chat }: ChatSectionProps) {
       id="chat"
       title={chat.windowTitle}
       meta={chat.meta}
-      cwd="~/projects"
+      cwd={cwd}
       badge={
         <div className="flex max-w-[min(100%,20rem)] flex-col items-end gap-1 sm:max-w-none sm:flex-row sm:items-center">
           <label className="flex items-center gap-1">
@@ -152,7 +153,7 @@ export function ChatSection({ chat }: ChatSectionProps) {
         {!started ? (
           <TypewriterPrompt
             command={chat.command}
-            cwd="~/projects"
+            cwd={cwd}
             onComplete={() => setStarted(true)}
           />
         ) : (
@@ -160,7 +161,7 @@ export function ChatSection({ chat }: ChatSectionProps) {
             <span className="text-prompt-user">nyrokume</span>
             <span className="text-prompt-host">@arch</span>
             <span className="text-foreground">:</span>
-            <span className="text-prompt-path">~/projects</span>
+            <span className="text-prompt-path">{cwd}</span>
             <span className="text-foreground">$ </span>
             <span className="text-foreground">{chat.command}</span>
           </p>

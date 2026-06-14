@@ -7,7 +7,7 @@ export default function ChatPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/projects#chat");
+    router.replace("/#chat");
   }, [router]);
 
   return null;

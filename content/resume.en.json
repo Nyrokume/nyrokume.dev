@@ -48,9 +48,9 @@
       },
       {
         "id": "chat",
-        "label": "ask ai chat",
-        "href": "/projects#chat",
-        "icon": "chat"
+        "label": "Questions about the site?",
+        "icon": "chat",
+        "behavior": "openChat"
       },
       {
         "id": "copy",
