@@ -312,7 +312,7 @@
       "unavailableLabel": "Telegram is not configured yet — send your inquiry by email.",
       "fallbackMailLabel": "send via email",
       "nameInvalidLabel": "Name: 2–100 chars, letters and spaces, no links or @.",
-      "contactInvalidLabel": "Contact: email or @telegram / t.me/username (5–32 chars).",
+      "contactInvalidLabel": "Contact: email or @telegram / t.me/username (4–32 chars).",
       "messageInvalidLabel": "Task: 5–2000 characters, no control characters.",
       "formHint": "Name — 2+ chars. Contact — email or @telegram / t.me/username. Task — 5+ chars."
     },

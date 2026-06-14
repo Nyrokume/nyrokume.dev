@@ -20,10 +20,10 @@ const UNSAFE_CHARS = /[\x00-\x08\x0B\x0C\x0E-\x1F<>{}]/;
 const EMAIL_PATTERN =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
-const TELEGRAM_USERNAME = /^[a-zA-Z][a-zA-Z0-9_]{4,31}$/;
+const TELEGRAM_USERNAME = /^[a-zA-Z][a-zA-Z0-9_]{3,31}$/;
 
 const TELEGRAM_URL =
-  /^(?:https?:\/\/)?(?:t\.me|telegram\.me)\/([a-zA-Z][a-zA-Z0-9_]{4,31})\/?$/i;
+  /^(?:https?:\/\/)?(?:t\.me|telegram\.me)\/([a-zA-Z][a-zA-Z0-9_]{3,31})\/?$/i;
 
 export function normalizeInquiryContact(raw: string): string {
   const value = raw.trim();

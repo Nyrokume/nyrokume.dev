@@ -312,7 +312,7 @@
       "unavailableLabel": "Telegram пока не настроен — отправьте заявку на почту.",
       "fallbackMailLabel": "отправить на почту",
       "nameInvalidLabel": "Имя: 2–100 символов, буквы и пробелы, без ссылок и @.",
-      "contactInvalidLabel": "Контакт: email или @telegram / t.me/username (5–32 символа).",
+      "contactInvalidLabel": "Контакт: email или @telegram / t.me/username (4–32 символа).",
       "messageInvalidLabel": "Задача: от 5 до 2000 символов, без служебных символов.",
       "formHint": "Имя — от 2 символов. Контакт — email или @telegram / t.me/username. Задача — от 5 символов."
     },
