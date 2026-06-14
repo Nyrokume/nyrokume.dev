@@ -53,9 +53,10 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
   );
 
   const canSubmit =
-    validateInquiryFields(trimmedValues) === null &&
     !loading &&
-    Boolean(trimmedValues.name && trimmedValues.contact && trimmedValues.message);
+    trimmedValues.name.length > 0 &&
+    trimmedValues.contact.length > 0 &&
+    trimmedValues.message.length > 0;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -246,6 +247,7 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
           >
             {loading ? inquiry.sendingLabel : inquiry.submitLabel}
           </button>
+          <p className="text-xs text-muted">{inquiry.formHint}</p>
         </form>
       </article>
     </TerminalReveal>

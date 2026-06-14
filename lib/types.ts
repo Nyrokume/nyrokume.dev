@@ -134,6 +134,7 @@ export type ContactInquiryConfig = {
   nameInvalidLabel: string;
   contactInvalidLabel: string;
   messageInvalidLabel: string;
+  formHint: string;
 };
 
 export type ContactCard = {

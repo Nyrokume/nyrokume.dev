@@ -10,7 +10,7 @@ export const INQUIRY_LIMITS = {
   nameMin: 2,
   nameMax: 100,
   contactMax: 120,
-  messageMin: 10,
+  messageMin: 5,
   messageMax: 2000,
 } as const;
 
