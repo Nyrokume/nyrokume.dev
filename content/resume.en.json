@@ -35,26 +35,26 @@
     "actions": [
       {
         "id": "github",
-        "label": "github.com/Nyrokume",
+        "label": "GitHub",
         "href": "https://github.com/Nyrokume",
         "icon": "github"
       },
       {
         "id": "telegram",
-        "label": "t.me/nyrokume",
+        "label": "Telegram",
         "href": "https://t.me/nyrokume",
         "icon": "telegram"
       },
       {
         "id": "connect",
-        "label": "send email",
+        "label": "email",
         "href": "mailto:nyrokumework@gmail.com?subject=Collaboration%20inquiry",
         "icon": "mail",
         "primary": true
       },
       {
         "id": "chat",
-        "label": "Questions about the site?",
+        "label": "ask ai",
         "icon": "chat",
         "behavior": "openChat"
       }
