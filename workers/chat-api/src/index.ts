@@ -15,7 +15,11 @@ import {
   CHAT_MAX_OUTPUT_TOKENS,
   CHAT_TEMPERATURE,
 } from "../../../shared/chat-generation-config";
-import { parseInquiryBody, sendTelegramInquiry } from "../../../shared/telegram-inquiry";
+import {
+  enrichInquiryFromRequest,
+  parseInquiryBody,
+  sendTelegramInquiry,
+} from "../../../shared/telegram-inquiry";
 
 type Locale = "ru" | "en";
 type Role = "user" | "assistant";
@@ -325,7 +329,7 @@ async function handleChat(request: Request, env: Env, origin: string | null): Pr
 async function handleInquiry(request: Request, env: Env, origin: string | null): Promise<Response> {
   try {
     const body = await request.json();
-    const payload = parseInquiryBody(body);
+    const payload = enrichInquiryFromRequest(parseInquiryBody(body), request);
     await sendTelegramInquiry(env, payload);
     return jsonResponse({ ok: true }, 200, origin);
   } catch (error) {

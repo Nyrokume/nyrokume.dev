@@ -1,16 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useLocale } from "@/components/providers/locale-provider";
 import { TerminalReveal } from "@/components/ui/terminal-anim";
 import { getInquiryApiUrl } from "@/lib/api-base-url";
+import { collectInquiryClientMeta } from "@/lib/inquiry-client-meta";
 import { buildInquiryMailto } from "@/lib/inquiry-mailto";
 import type { ContactInquiryConfig } from "@/lib/types";
+import {
+  INQUIRY_LIMITS,
+  validateInquiryFields,
+  type InquiryValidationField,
+} from "@/shared/inquiry-validation";
 
 type ContactInquiryFormProps = {
   inquiry: ContactInquiryConfig;
   delay?: number;
 };
+
+function validationMessage(
+  field: InquiryValidationField,
+  inquiry: ContactInquiryConfig,
+): string {
+  switch (field) {
+    case "name":
+      return inquiry.nameInvalidLabel;
+    case "contact":
+      return inquiry.contactInvalidLabel;
+    case "message":
+      return inquiry.messageInvalidLabel;
+  }
+}
 
 export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormProps) {
   const { locale } = useLocale();
@@ -23,6 +43,20 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
   const [error, setError] = useState<string | null>(null);
   const [mailtoFallback, setMailtoFallback] = useState<string | null>(null);
 
+  const trimmedValues = useMemo(
+    () => ({
+      name: name.trim(),
+      contact: contact.trim(),
+      message: message.trim(),
+    }),
+    [name, contact, message],
+  );
+
+  const canSubmit =
+    validateInquiryFields(trimmedValues) === null &&
+    !loading &&
+    Boolean(trimmedValues.name && trimmedValues.contact && trimmedValues.message);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (loading) return;
@@ -32,11 +66,16 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
     setSuccess(false);
     setMailtoFallback(null);
 
+    const invalidField = validateInquiryFields(trimmedValues);
+    if (invalidField) {
+      setError(validationMessage(invalidField, inquiry));
+      setLoading(false);
+      return;
+    }
+
     try {
       const payload = {
-        name: name.trim(),
-        contact: contact.trim(),
-        message: message.trim(),
+        ...trimmedValues,
         locale,
       };
       const mailto = buildInquiryMailto(payload);
@@ -47,6 +86,7 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
         body: JSON.stringify({
           ...payload,
           website,
+          meta: collectInquiryClientMeta(),
         }),
       });
 
@@ -62,7 +102,19 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
           setMailtoFallback(mailto);
           throw new Error(inquiry.unavailableLabel);
         }
-        throw new Error(data.error ?? inquiry.errorLabel);
+
+        const apiError = data.error ?? inquiry.errorLabel;
+        if (apiError === "Invalid name format") {
+          throw new Error(inquiry.nameInvalidLabel);
+        }
+        if (apiError === "Invalid contact format") {
+          throw new Error(inquiry.contactInvalidLabel);
+        }
+        if (apiError === "Invalid message format") {
+          throw new Error(inquiry.messageInvalidLabel);
+        }
+
+        throw new Error(apiError);
       }
 
       setSuccess(true);
@@ -75,14 +127,7 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
       const isNetwork =
         raw === "Failed to fetch" || raw.includes("NetworkError") || raw === inquiry.unavailableLabel;
       if (isNetwork && !mailtoFallback) {
-        setMailtoFallback(
-          buildInquiryMailto({
-            name: name.trim(),
-            contact: contact.trim(),
-            message: message.trim(),
-            locale,
-          }),
-        );
+        setMailtoFallback(buildInquiryMailto({ ...trimmedValues, locale }));
       }
       setError(raw === "Failed to fetch" ? inquiry.unavailableLabel : raw);
     } finally {
@@ -124,7 +169,8 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
               id="inquiry-name"
               type="text"
               required
-              maxLength={100}
+              minLength={INQUIRY_LIMITS.nameMin}
+              maxLength={INQUIRY_LIMITS.nameMax}
               autoComplete="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -142,8 +188,9 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
               id="inquiry-contact"
               type="text"
               required
-              maxLength={120}
+              maxLength={INQUIRY_LIMITS.contactMax}
               autoComplete="email"
+              inputMode="email"
               value={contact}
               onChange={(event) => setContact(event.target.value)}
               placeholder={inquiry.contactPlaceholder}
@@ -160,7 +207,8 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
               id="inquiry-message"
               required
               rows={4}
-              maxLength={2000}
+              minLength={INQUIRY_LIMITS.messageMin}
+              maxLength={INQUIRY_LIMITS.messageMax}
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               placeholder={inquiry.messagePlaceholder}
@@ -193,7 +241,7 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
 
           <button
             type="submit"
-            disabled={loading || !name.trim() || !contact.trim() || !message.trim()}
+            disabled={!canSubmit}
             className="focus-ring w-full cursor-pointer rounded border border-accent/50 bg-accent-muted px-4 py-2.5 text-sm text-foreground transition-colors hover:border-accent hover:bg-accent/20 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             {loading ? inquiry.sendingLabel : inquiry.submitLabel}

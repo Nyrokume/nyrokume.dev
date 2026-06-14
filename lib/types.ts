@@ -131,6 +131,9 @@ export type ContactInquiryConfig = {
   errorLabel: string;
   unavailableLabel: string;
   fallbackMailLabel: string;
+  nameInvalidLabel: string;
+  contactInvalidLabel: string;
+  messageInvalidLabel: string;
 };
 
 export type ContactCard = {

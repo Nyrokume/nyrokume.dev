@@ -310,7 +310,10 @@
       "successLabel": "Заявка отправлена — скоро отвечу.",
       "errorLabel": "Не удалось отправить заявку.",
       "unavailableLabel": "Telegram пока не настроен — отправьте заявку на почту.",
-      "fallbackMailLabel": "отправить на почту"
+      "fallbackMailLabel": "отправить на почту",
+      "nameInvalidLabel": "Имя: 2–100 символов, буквы и пробелы, без ссылок и @.",
+      "contactInvalidLabel": "Контакт: email или @telegram / t.me/username (5–32 символа).",
+      "messageInvalidLabel": "Задача: от 10 до 2000 символов, без служебных символов."
     },
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",

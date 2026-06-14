@@ -1,9 +1,13 @@
-import { parseInquiryBody, sendTelegramInquiry } from "@/shared/telegram-inquiry";
+import {
+  enrichInquiryFromRequest,
+  parseInquiryBody,
+  sendTelegramInquiry,
+} from "@/shared/telegram-inquiry";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const payload = parseInquiryBody(body);
+    const payload = enrichInquiryFromRequest(parseInquiryBody(body), request);
     await sendTelegramInquiry(
       {
         TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,

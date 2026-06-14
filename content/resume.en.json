@@ -310,7 +310,10 @@
       "successLabel": "Inquiry sent — I will reply soon.",
       "errorLabel": "Could not send the inquiry.",
       "unavailableLabel": "Telegram is not configured yet — send your inquiry by email.",
-      "fallbackMailLabel": "send via email"
+      "fallbackMailLabel": "send via email",
+      "nameInvalidLabel": "Name: 2–100 chars, letters and spaces, no links or @.",
+      "contactInvalidLabel": "Contact: email or @telegram / t.me/username (5–32 chars).",
+      "messageInvalidLabel": "Task: 10–2000 characters, no control characters."
     },
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",
