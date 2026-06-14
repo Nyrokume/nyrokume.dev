@@ -54,7 +54,7 @@
       },
       {
         "id": "chat",
-        "label": "ask ai",
+        "label": "ask the site assistant",
         "icon": "chat",
         "behavior": "openChat"
       }
