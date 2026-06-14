@@ -89,6 +89,11 @@ function HeroActionButton({ action }: { action: HeroAction }) {
       <path strokeWidth="2" d="M4 6h16v12H4z" />
       <path strokeWidth="2" d="m4 7 8 5 8-5" />
     </svg>
+  ) : action.icon === "chat" ? (
+    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" aria-hidden>
+      <path strokeWidth="2" d="M4 5h16v11H8l-4 4V5Z" strokeLinejoin="round" />
+      <path strokeWidth="2" d="M8 9h8M8 12h5" strokeLinecap="round" />
+    </svg>
   ) : (
     <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" aria-hidden>
       <rect x="9" y="9" width="10" height="10" strokeWidth="2" rx="1" />

@@ -7,6 +7,7 @@ import {
   TypewriterPrompt,
 } from "@/components/ui/terminal-anim";
 import { TerminalWindow } from "@/components/ui/terminal-window";
+import { ContactInquiryForm } from "@/components/sections/contact-inquiry-form";
 import type { ContactCard } from "@/lib/types";
 
 export function ContactSection() {
@@ -64,6 +65,13 @@ export function ContactSection() {
               />
             ))}
           </div>
+        ) : null}
+
+        {phase >= 1 ? (
+          <ContactInquiryForm
+            inquiry={contact.inquiry}
+            delay={250 + contact.cards.length * 180 + 120}
+          />
         ) : null}
 
         {phase >= 2 ? (

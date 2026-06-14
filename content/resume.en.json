@@ -47,6 +47,12 @@
         "primary": true
       },
       {
+        "id": "chat",
+        "label": "ask ai chat",
+        "href": "/projects#chat",
+        "icon": "chat"
+      },
+      {
         "id": "copy",
         "label": "copy name",
         "icon": "copy",
@@ -289,6 +295,22 @@
         "href": "https://github.com/Nyrokume"
       }
     ],
+    "inquiry": {
+      "title": "send inquiry",
+      "hint": "Fill out the form — the message goes straight to my Telegram.",
+      "nameLabel": "name",
+      "namePlaceholder": "How should I address you",
+      "contactLabel": "contact",
+      "contactPlaceholder": "Email or @telegram",
+      "messageLabel": "task",
+      "messagePlaceholder": "Briefly describe what you need",
+      "websiteLabel": "website",
+      "submitLabel": "send to telegram",
+      "sendingLabel": "sending...",
+      "successLabel": "Inquiry sent — I will reply soon.",
+      "errorLabel": "Could not send the inquiry.",
+      "unavailableLabel": "Form is temporarily unavailable — message me on telegram or email."
+    },
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",
     "exitLine": "process exited (0)"

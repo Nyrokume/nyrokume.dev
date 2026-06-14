@@ -56,7 +56,7 @@ export type HeroAction = {
   id: string;
   label: string;
   href?: string;
-  icon: "github" | "mail" | "copy";
+  icon: "github" | "mail" | "copy" | "chat";
   primary?: boolean;
   copyValue?: string;
 };
@@ -112,6 +112,23 @@ export type ProjectItem = {
   href?: string;
   /** Rich card with gallery — use for shipped portfolio projects */
   showcase?: ProjectShowcase;
+};
+
+export type ContactInquiryConfig = {
+  title: string;
+  hint: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  contactLabel: string;
+  contactPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  websiteLabel: string;
+  submitLabel: string;
+  sendingLabel: string;
+  successLabel: string;
+  errorLabel: string;
+  unavailableLabel: string;
 };
 
 export type ContactCard = {
@@ -182,6 +199,7 @@ export type ResumeContent = {
     command: string;
     handshakeLine: string;
     cards: ContactCard[];
+    inquiry: ContactInquiryConfig;
     echoCommand: string;
     echoOutput: string;
     exitLine: string;

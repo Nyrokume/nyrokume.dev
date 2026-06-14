@@ -3,6 +3,8 @@ export interface Env {
   GROQ_API_KEY?: string;
   OPENROUTER_API_KEY?: string;
   CHAT_PROVIDER_ORDER?: string;
+  TELEGRAM_BOT_TOKEN?: string;
+  TELEGRAM_CHAT_ID?: string;
 }
 
 import {
@@ -13,6 +15,7 @@ import {
   CHAT_MAX_OUTPUT_TOKENS,
   CHAT_TEMPERATURE,
 } from "../../../shared/chat-generation-config";
+import { parseInquiryBody, sendTelegramInquiry } from "../../../shared/telegram-inquiry";
 
 type Locale = "ru" | "en";
 type Role = "user" | "assistant";
@@ -280,6 +283,75 @@ function parseMessages(raw: unknown): ChatMessage[] {
   });
 }
 
+async function handleChat(request: Request, env: Env, origin: string | null): Promise<Response> {
+  try {
+    const body = (await request.json()) as {
+      messages?: unknown;
+      locale?: unknown;
+      provider?: string;
+      model?: string;
+    };
+
+    const messages = parseMessages(body.messages);
+    if (messages.at(-1)?.role !== "user") {
+      return jsonResponse({ error: "Last message must be from user" }, 400, origin);
+    }
+
+    const locale: Locale = body.locale === "en" ? "en" : "ru";
+    const content = await generateReply(
+      env,
+      messages,
+      locale,
+      body.provider,
+      body.model,
+    );
+
+    return jsonResponse({ message: { role: "assistant", content } }, 200, origin);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Chat failed";
+
+    if (message.startsWith("Invalid message") || message === "Invalid messages") {
+      return jsonResponse({ error: message }, 400, origin);
+    }
+
+    if (message === "No chat providers configured") {
+      return jsonResponse({ error: "Chat is not configured" }, 503, origin);
+    }
+
+    return jsonResponse({ error: "Chat temporarily unavailable" }, 502, origin);
+  }
+}
+
+async function handleInquiry(request: Request, env: Env, origin: string | null): Promise<Response> {
+  try {
+    const body = await request.json();
+    const payload = parseInquiryBody(body);
+    await sendTelegramInquiry(env, payload);
+    return jsonResponse({ ok: true }, 200, origin);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Inquiry failed";
+
+    if (
+      message === "Invalid body" ||
+      message.startsWith("Invalid name") ||
+      message.startsWith("Invalid contact") ||
+      message.startsWith("Invalid message")
+    ) {
+      return jsonResponse({ error: message }, 400, origin);
+    }
+
+    if (message === "Spam detected") {
+      return jsonResponse({ ok: true }, 200, origin);
+    }
+
+    if (message === "Telegram is not configured") {
+      return jsonResponse({ error: "Inquiry is not configured" }, 503, origin);
+    }
+
+    return jsonResponse({ error: "Inquiry temporarily unavailable" }, 502, origin);
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const origin = request.headers.get("Origin");
@@ -289,45 +361,18 @@ export default {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 
-    if (request.method !== "POST" || !url.pathname.endsWith("/api/chat")) {
+    if (request.method !== "POST") {
       return jsonResponse({ error: "Not found" }, 404, origin);
     }
 
-    try {
-      const body = (await request.json()) as {
-        messages?: unknown;
-        locale?: unknown;
-        provider?: string;
-        model?: string;
-      };
-
-      const messages = parseMessages(body.messages);
-      if (messages.at(-1)?.role !== "user") {
-        return jsonResponse({ error: "Last message must be from user" }, 400, origin);
-      }
-
-      const locale: Locale = body.locale === "en" ? "en" : "ru";
-      const content = await generateReply(
-        env,
-        messages,
-        locale,
-        body.provider,
-        body.model,
-      );
-
-      return jsonResponse({ message: { role: "assistant", content } }, 200, origin);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Chat failed";
-
-      if (message.startsWith("Invalid message") || message === "Invalid messages") {
-        return jsonResponse({ error: message }, 400, origin);
-      }
-
-      if (message === "No chat providers configured") {
-        return jsonResponse({ error: "Chat is not configured" }, 503, origin);
-      }
-
-      return jsonResponse({ error: "Chat temporarily unavailable" }, 502, origin);
+    if (url.pathname.endsWith("/api/chat")) {
+      return handleChat(request, env, origin);
     }
+
+    if (url.pathname.endsWith("/api/inquiry")) {
+      return handleInquiry(request, env, origin);
+    }
+
+    return jsonResponse({ error: "Not found" }, 404, origin);
   },
 };

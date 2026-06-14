@@ -47,6 +47,12 @@
         "primary": true
       },
       {
+        "id": "chat",
+        "label": "спросить ai",
+        "href": "/projects#chat",
+        "icon": "chat"
+      },
+      {
         "id": "copy",
         "label": "скопировать имя",
         "icon": "copy",
@@ -289,6 +295,22 @@
         "href": "https://github.com/Nyrokume"
       }
     ],
+    "inquiry": {
+      "title": "отправить заявку",
+      "hint": "Заполните форму — сообщение придёт мне в Telegram.",
+      "nameLabel": "имя",
+      "namePlaceholder": "Как к вам обращаться",
+      "contactLabel": "контакт",
+      "contactPlaceholder": "Email или @telegram",
+      "messageLabel": "задача",
+      "messagePlaceholder": "Кратко опишите, что нужно сделать",
+      "websiteLabel": "website",
+      "submitLabel": "отправить в telegram",
+      "sendingLabel": "отправка...",
+      "successLabel": "Заявка отправлена — скоро отвечу.",
+      "errorLabel": "Не удалось отправить заявку.",
+      "unavailableLabel": "Форма временно недоступна — напишите в telegram или на почту."
+    },
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",
     "exitLine": "process exited (0)"
