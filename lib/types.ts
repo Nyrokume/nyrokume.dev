@@ -186,4 +186,8 @@ export type ResumeContent = {
     echoOutput: string;
     exitLine: string;
   };
+  footer: {
+    site: string;
+    copyright: string;
+  };
 };

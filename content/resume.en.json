@@ -62,26 +62,27 @@
       {
         "title": "main",
         "items": [
-          "Frontend: layout and interfaces — landing pages, SPAs, dashboards and admin panels. HTML, CSS, JavaScript, TypeScript, React, Next.js, responsive UI and motion.",
-          "Backend: REST/GraphQL APIs, auth, roles, databases, cache and background jobs. Node.js, Python, Go, PHP — stack chosen per project.",
-          "Integrations: payments, email, webhooks, CRM and third-party APIs when services need to talk to each other.",
-          "AI for automation: chatbots, classification, text generation — only when it saves time or cost vs doing it manually."
+          "I work on frontend — everything visible in the browser: pages, forms, menus, user dashboards, and admin panels. I build responsive layouts with HTML, CSS, JavaScript, TypeScript, React, Angular, Vue, Svelte, Next.js, Nuxt, Tailwind, and Vite — see frontend/ in skills (12 items).",
+          "I write backend code: server logic, APIs, login and user roles, databases, cache, and background jobs. I use Node.js, Python, PHP, Go, Rust, Java, C++, C#, and more; PostgreSQL, MySQL, SQLite, MongoDB — all listed under backend/ in skills.",
+          "I connect services with REST, GraphQL, WebSocket, and webhooks — payments, email, CRM, third-party APIs. In skills that is the api/ folder.",
+          "I add AI — chatbots, request triage, draft text — only when doing it without AI is genuinely slower or more expensive."
         ]
       },
       {
         "title": "also",
         "items": [
-          "Desktop: Tauri, Electron — when you need an app outside the browser on Windows, macOS or Linux.",
-          "Systems & native: Rust, C++, C# — when performance or low-level work matters.",
-          "Legacy & niche: 1C, Lua — when it is already in the project or solves a specific task fast."
+          "I build servers with Flask, FastAPI, Laravel, Nest.js, Express and desktop apps with Tauri and Electron — see frameworks/ in skills.",
+          "I deploy with Docker, Linux, Nginx, Git, and GitHub Actions; I script with Bash and work in VS Code and Figma — the tools/ block in skills.",
+          "I work with 1C:Enterprise, Accounting, document flow, and ERP when it is already part of your workflow — listed under 1c/ in skills."
         ]
       },
       {
         "title": "approach",
         "items": [
-          "Understand the task and MVP first, then grow — no bloat or checkbox features.",
-          "Document key decisions, keep code readable, deliver something maintainable.",
-          "Reach out via Contact — we will discuss the task, timeline and find a solution."
+          "I start by clarifying the task with you in plain language: what success looks like, who it is for, and the timeline. I ship a minimal working version, we review together, then expand without bloat.",
+          "I explain key decisions, keep code readable, and hand off a project you can maintain without me.",
+          "Interested? Write me via Contact — I will reply and we can talk through your task.",
+          "Full stack — 49 items, see the skills section."
         ]
       }
     ]
@@ -291,5 +292,9 @@
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",
     "exitLine": "process exited (0)"
+  },
+  "footer": {
+    "site": "nyrokume.dev",
+    "copyright": "© 2026 Evgeni Nefedov · All rights reserved."
   }
 }

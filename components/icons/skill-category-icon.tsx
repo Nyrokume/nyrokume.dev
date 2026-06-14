@@ -3,7 +3,13 @@ type SkillCategoryIconProps = {
   className?: string;
 };
 
-const iconClass = "h-3.5 w-3.5 shrink-0 stroke-current";
+const iconClass = "h-4 w-4 shrink-0 stroke-current";
+
+const stroke = {
+  strokeWidth: 1.5,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
 
 export function SkillCategoryIcon({ id, className }: SkillCategoryIconProps) {
   const cn = className ? `${iconClass} ${className}` : iconClass;
@@ -11,79 +17,80 @@ export function SkillCategoryIcon({ id, className }: SkillCategoryIconProps) {
   switch (id) {
     case "frontend":
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
-          <rect x="1.5" y="2.5" width="13" height="11" rx="1" strokeWidth="1.25" />
-          <path d="M1.5 5h13" strokeWidth="1.25" />
-          <rect x="3.5" y="7" width="5" height="4.5" rx="0.5" strokeWidth="1.1" />
-          <path d="M10 7.5h2.5M10 10h3M10 12.5h2" strokeWidth="1.1" strokeLinecap="round" />
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
+          <rect x="2.5" y="4" width="19" height="15" rx="2" {...stroke} />
+          <path d="M2.5 8.5h19" {...stroke} />
+          <circle cx="5.5" cy="6.25" r="0.85" fill="currentColor" stroke="none" />
+          <circle cx="8.25" cy="6.25" r="0.85" fill="currentColor" stroke="none" />
+          <circle cx="11" cy="6.25" r="0.85" fill="currentColor" stroke="none" />
+          <rect x="5" y="11" width="6.5" height="5" rx="1" {...stroke} />
+          <path d="M14 11.5h5M14 14h4M14 16.5h5.5" {...stroke} />
         </svg>
       );
 
     case "backend":
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
-          <rect x="3" y="2" width="10" height="3" rx="0.75" strokeWidth="1.25" />
-          <rect x="3" y="6.5" width="10" height="3" rx="0.75" strokeWidth="1.25" />
-          <rect x="3" y="11" width="10" height="3" rx="0.75" strokeWidth="1.25" />
-          <circle cx="5" cy="3.5" r="0.55" fill="currentColor" stroke="none" />
-          <circle cx="5" cy="8" r="0.55" fill="currentColor" stroke="none" />
-          <circle cx="5" cy="12.5" r="0.55" fill="currentColor" stroke="none" />
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
+          <rect x="3" y="4" width="18" height="5.5" rx="1.5" {...stroke} />
+          <rect x="3" y="11" width="18" height="5.5" rx="1.5" {...stroke} />
+          <rect x="3" y="18" width="18" height="2.5" rx="1" {...stroke} />
+          <circle cx="6.25" cy="6.75" r="1" fill="currentColor" stroke="none" />
+          <circle cx="6.25" cy="13.75" r="1" fill="currentColor" stroke="none" />
+          <path d="M9.5 6.75h8.5M9.5 13.75h6.5" {...stroke} opacity="0.45" />
+          <ellipse cx="12" cy="19.25" rx="4.5" ry="1.1" {...stroke} opacity="0.35" />
         </svg>
       );
 
     case "api":
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
-          <rect x="1.5" y="5" width="4" height="6" rx="0.75" strokeWidth="1.25" />
-          <rect x="10.5" y="5" width="4" height="6" rx="0.75" strokeWidth="1.25" />
-          <path d="M6 8h4" strokeWidth="1.25" strokeLinecap="round" />
-          <path d="M8.2 6.8 9.8 8 8.2 9.2" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M7.8 6.8 6.2 8l1.6 1.2" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
+          <path d="M8 7C5.5 9 5.5 15 8 17" {...stroke} />
+          <path d="M16 7c2.5 2 2.5 8 0 10" {...stroke} />
+          <path d="M13.5 9 10.5 15" {...stroke} />
         </svg>
       );
 
     case "frameworks":
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
-          <path d="M2 10.5 8 13.5 14 10.5" strokeWidth="1.25" strokeLinejoin="round" />
-          <path d="M2 8 8 11 14 8" strokeWidth="1.25" strokeLinejoin="round" />
-          <path d="M2 5.5 8 8.5 14 5.5" strokeWidth="1.25" strokeLinejoin="round" />
-          <path d="M8 2.5v11" strokeWidth="1.1" strokeLinecap="round" opacity="0.55" />
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
+          <path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z" {...stroke} />
+          <path d="M4 7.5 12 12l8-4.5M12 12v9" {...stroke} />
+          <path d="M8.5 9.75 12 12l3.5-2.25" {...stroke} opacity="0.55" />
         </svg>
       );
 
     case "tools":
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
           <path
-            d="M10.2 2.8a2.6 2.6 0 0 0-3.4 3.9L3.5 10l2 2 3.3-3.3a2.6 2.6 0 0 0 3.9-3.4L9.8 8.2"
-            strokeWidth="1.25"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M14.7 6.3a4.5 4.5 0 0 0-6.1 6.1L3 18l3 3 5.6-5.6a4.5 4.5 0 0 0 6.1-6.1l-1.9 1.9-2.2-2.2 1.9-1.9Z"
+            {...stroke}
           />
-          <path d="M3.5 10 2 11.5" strokeWidth="1.25" strokeLinecap="round" />
-          <circle cx="11.5" cy="4.5" r="0.75" strokeWidth="1.1" />
+          <path d="M13.5 4.5 19.5 10.5" {...stroke} />
+          <circle cx="16.75" cy="7.25" r="1.35" {...stroke} />
         </svg>
       );
 
     case "enterprise":
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
-          <path d="M3 13.5V6.5l5-3 5 3v7" strokeWidth="1.25" strokeLinejoin="round" />
-          <path d="M6.5 13.5V9.5h3v4" strokeWidth="1.25" strokeLinejoin="round" />
-          <path d="M1.5 13.5h13" strokeWidth="1.25" strokeLinecap="round" />
-          <path d="M5.5 7h1M9.5 7h1M5.5 9.5h1M9.5 9.5h1" strokeWidth="1.1" strokeLinecap="round" />
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
+          <path d="M4 20V9.5l8-4.5 8 4.5V20" {...stroke} />
+          <path d="M2.5 20h19" {...stroke} />
+          <path d="M9.5 20v-5.5h5V20" {...stroke} />
+          <path d="M8 12.5h2M14 12.5h2M8 15.5h2M14 15.5h2" {...stroke} />
+          <path d="M12 5v2.5" {...stroke} opacity="0.55" />
         </svg>
       );
 
     default:
       return (
-        <svg viewBox="0 0 16 16" className={cn} fill="none" aria-hidden>
+        <svg viewBox="0 0 24 24" className={cn} fill="none" aria-hidden>
           <path
-            d="M2.5 4.5A1.5 1.5 0 0 1 4 3h8a1.5 1.5 0 0 1 1.5 1.5V12a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 12V4.5Z"
-            strokeWidth="1.25"
+            d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-11Z"
+            {...stroke}
           />
-          <path d="M2.5 6.5h11" strokeWidth="1.25" />
+          <path d="M4 9h16" {...stroke} />
+          <path d="M8 13h8M8 16h5" {...stroke} />
         </svg>
       );
   }

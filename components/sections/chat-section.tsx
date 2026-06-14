@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/providers/locale-provider";
 import { TypewriterPrompt } from "@/components/ui/terminal-anim";
 import { TerminalWindow } from "@/components/ui/terminal-window";
+import { TerminalSelect } from "@/components/ui/terminal-select";
 import { buildChatProviders, getDefaultLiteModel } from "@/lib/chat-catalog";
 import type { ChatMessage } from "@/lib/chat-types";
 import { getChatApiUrl } from "@/lib/chat-api-url";
@@ -12,9 +13,6 @@ import type { ChatConfig } from "@/lib/types";
 type ChatSectionProps = {
   chat: ChatConfig;
 };
-
-const selectClassName =
-  "focus-ring cursor-pointer rounded border border-accent/40 bg-accent-muted px-2 py-0.5 text-xs text-accent-bright outline-none transition-colors hover:border-accent/60 disabled:cursor-not-allowed disabled:opacity-60";
 
 export function ChatSection({ chat }: ChatSectionProps) {
   const { locale } = useLocale();
@@ -123,35 +121,29 @@ export function ChatSection({ chat }: ChatSectionProps) {
         <div className="flex max-w-[min(100%,20rem)] flex-col items-end gap-1 sm:max-w-none sm:flex-row sm:items-center">
           <label className="flex items-center gap-1">
             <span className="sr-only">{chat.providerLabel}</span>
-            <select
+            <TerminalSelect
               value={providerId}
-              onChange={(event) => handleProviderChange(event.target.value)}
+              options={providers.map((option) => ({
+                value: option.id,
+                label: option.label,
+              }))}
+              onChange={handleProviderChange}
               disabled={loading}
               aria-label={chat.providerLabel}
-              className={selectClassName}
-            >
-              {providers.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            />
           </label>
           <label className="flex items-center gap-1">
             <span className="sr-only">{chat.modelLabel}</span>
-            <select
+            <TerminalSelect
               value={model}
-              onChange={(event) => setModel(event.target.value)}
+              options={activeProvider.models.map((option) => ({
+                value: option.id,
+                label: option.recommended ? `★ ${option.label}` : option.label,
+              }))}
+              onChange={setModel}
               disabled={loading}
               aria-label={chat.modelLabel}
-              className={selectClassName}
-            >
-              {activeProvider.models.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.recommended ? `★ ${option.label}` : option.label}
-                </option>
-              ))}
-            </select>
+            />
           </label>
         </div>
       }

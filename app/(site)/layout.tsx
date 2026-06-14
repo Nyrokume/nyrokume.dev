@@ -1,4 +1,5 @@
 import { TopBar } from "@/components/layout/top-bar";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 export default function SiteLayout({
   children,
@@ -6,7 +7,8 @@ export default function SiteLayout({
   return (
     <>
       <TopBar />
-      <main className="page-shell pb-12">{children}</main>
+      <main className="page-shell pb-8">{children}</main>
+      <SiteFooter />
     </>
   );
 }
