@@ -5,8 +5,20 @@ export type InquiryClientMeta = {
   browser?: string;
 };
 
+export type InquiryGeoMeta = {
+  country?: string;
+  countryCode?: string;
+  city?: string;
+  region?: string;
+  provider?: string;
+  asn?: string;
+  hostname?: string;
+  hosting?: boolean;
+};
+
 export type InquiryMeta = InquiryClientMeta & {
   ip?: string;
+  geo?: InquiryGeoMeta;
 };
 
 export type InquiryPayload = {
@@ -30,6 +42,11 @@ import {
   isValidInquiryMessage,
   isValidInquiryName,
 } from "./inquiry-validation";
+import {
+  type CfGeoProperties,
+  type IpGeoLookup,
+  resolveIpGeo,
+} from "./ip-geo";
 
 const MAX_META_FIELD = 512;
 const MAX_BROWSER = 320;
@@ -92,8 +109,51 @@ export function enrichInquiryFromRequest(
         : undefined),
   };
 
-  const hasMeta = Object.values(meta).some(Boolean);
+  const hasMeta = Object.values(meta).some((value) => {
+    if (value && typeof value === "object") {
+      return Object.values(value).some(Boolean);
+    }
+    return Boolean(value);
+  });
+
   return hasMeta ? { ...payload, meta } : payload;
+}
+
+export async function enrichInquiryGeoFromRequest(
+  payload: InquiryPayload,
+  request: Request,
+): Promise<InquiryPayload> {
+  const ip = payload.meta?.ip ?? getClientIp(request);
+  const cf = (request as Request & { cf?: CfGeoProperties }).cf;
+  const geo = await resolveIpGeo(ip, cf, payload.locale);
+
+  if (!geo) {
+    return payload;
+  }
+
+  const meta: InquiryMeta = {
+    ...payload.meta,
+    ip,
+    geo: mergeGeoMeta(payload.meta?.geo, geo),
+  };
+
+  return { ...payload, meta };
+}
+
+function mergeGeoMeta(
+  existing: InquiryGeoMeta | undefined,
+  next: IpGeoLookup,
+): InquiryGeoMeta {
+  return {
+    country: next.country ?? existing?.country,
+    countryCode: next.countryCode ?? existing?.countryCode,
+    city: next.city ?? existing?.city,
+    region: next.region ?? existing?.region,
+    provider: next.provider ?? existing?.provider,
+    asn: next.asn ?? existing?.asn,
+    hostname: next.hostname ?? existing?.hostname,
+    hosting: next.hosting ?? existing?.hosting,
+  };
 }
 
 export function parseInquiryBody(raw: unknown): InquiryPayload {
@@ -142,18 +202,40 @@ function formatMetaLines(meta: InquiryMeta | undefined, locale: InquiryLocale): 
       ? {
           section: "Client",
           ip: "IP",
+          hostname: "Host",
+          city: "City",
+          country: "Country",
+          provider: "Provider",
+          asn: "ASN",
           language: "Language",
           browser: "Browser",
         }
       : {
           section: "Клиент",
           ip: "IP",
+          hostname: "Хост",
+          city: "Город",
+          country: "Страна",
+          provider: "Провайдер",
+          asn: "ASN",
           language: "Язык",
           browser: "Браузер",
         };
 
+  const geo = meta.geo;
+  const countryLine = geo?.country
+    ? geo.countryCode && geo.countryCode !== geo.country
+      ? `${geo.country} (${geo.countryCode})`
+      : geo.country
+    : geo?.countryCode;
+
   const entries: Array<[string, string | undefined]> = [
     [labels.ip, meta.ip],
+    [labels.hostname, geo?.hostname],
+    [labels.city, geo?.city],
+    [labels.country, countryLine],
+    [labels.provider, geo?.provider],
+    [labels.asn, geo?.asn ? `AS${geo.asn.replace(/^AS/i, "")}` : undefined],
     [labels.language, meta.language],
     [labels.browser, meta.browser],
   ];

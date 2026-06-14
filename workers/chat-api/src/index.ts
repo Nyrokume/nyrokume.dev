@@ -17,6 +17,7 @@ import {
 } from "../../../shared/chat-generation-config";
 import {
   enrichInquiryFromRequest,
+  enrichInquiryGeoFromRequest,
   parseInquiryBody,
   sendTelegramInquiry,
 } from "../../../shared/telegram-inquiry";
@@ -329,7 +330,8 @@ async function handleChat(request: Request, env: Env, origin: string | null): Pr
 async function handleInquiry(request: Request, env: Env, origin: string | null): Promise<Response> {
   try {
     const body = await request.json();
-    const payload = enrichInquiryFromRequest(parseInquiryBody(body), request);
+    let payload = enrichInquiryFromRequest(parseInquiryBody(body), request);
+    payload = await enrichInquiryGeoFromRequest(payload, request);
     await sendTelegramInquiry(env, payload);
     return jsonResponse({ ok: true }, 200, origin);
   } catch (error) {
