@@ -7,7 +7,7 @@ export default function SiteLayout({
   return (
     <>
       <TopBar />
-      <main className="page-shell pb-8">{children}</main>
+      <main className="page-shell overflow-anchor-none pb-8">{children}</main>
       <SiteFooter />
     </>
   );

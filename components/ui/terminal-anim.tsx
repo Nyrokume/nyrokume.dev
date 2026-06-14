@@ -51,7 +51,7 @@ export function TypewriterPrompt({
   }, [started, command]);
 
   return (
-    <p ref={ref} className="terminal-log text-sm">
+    <p ref={ref} className="terminal-log min-h-[1.375rem] overflow-anchor-none text-sm">
       <span className="text-prompt-user">nyrokume</span>
       <span className="text-prompt-host">@arch</span>
       <span className="text-foreground">:</span>
@@ -90,9 +90,9 @@ export function TerminalReveal({
     <motion.div
       ref={ref}
       initial={{ opacity: 0, x: -6 }}
-      animate={visible ? { opacity: 1, x: 0 } : {}}
+      animate={visible ? { opacity: 1, x: 0 } : { opacity: 0, x: -6 }}
       transition={{ duration: 0.28, ease: "easeOut" }}
-      className={className}
+      className={`overflow-anchor-none${className ? ` ${className}` : ""}`}
     >
       {children}
     </motion.div>

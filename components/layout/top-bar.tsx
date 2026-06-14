@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { memo, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useLocale } from "@/components/providers/locale-provider";
 import { useTheme } from "@/components/providers/theme-provider";
 import { THEME_LABELS, THEME_SWATCHES, COLOR_THEMES } from "@/lib/theme";
@@ -38,7 +38,6 @@ export function TopBar() {
   const { content, locale, setLocale } = useLocale();
   const { header } = content;
   const pathname = usePathname();
-  const [time, setTime] = useState("00:00:00");
   const [menuOpen, setMenuOpen] = useState(false);
   const isCompact = useCompactNav();
 
@@ -46,22 +45,6 @@ export function TopBar() {
     header.nav.find((item) =>
       item.href === "/" ? pathname === "/" : pathname.startsWith(item.href),
     ) ?? header.nav[0];
-
-  useEffect(() => {
-    const tick = () => {
-      setTime(
-        new Date().toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
-        }),
-      );
-    };
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen && isCompact ? "hidden" : "";
@@ -87,7 +70,7 @@ export function TopBar() {
 
           {isCompact ? (
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <span className="tabular-nums text-xs text-muted">{time}</span>
+              <HeaderClock />
               <LocaleThemeControls locale={locale} setLocale={setLocale} />
               <MobileMenuButton
                 open={menuOpen}
@@ -105,7 +88,7 @@ export function TopBar() {
             >
               <NavLinks pathname={pathname} nav={header.nav} />
               <SocialDropdown header={header} />
-              <span className="shrink-0 tabular-nums text-xs text-muted">{time}</span>
+              <HeaderClock className="shrink-0" />
             </nav>
             <div className="hidden shrink-0 lg:flex">
               <LocaleThemeControls locale={locale} setLocale={setLocale} />
@@ -119,7 +102,6 @@ export function TopBar() {
           <MobileMenu
             header={header}
             pathname={pathname}
-            time={time}
             onClose={() => setMenuOpen(false)}
           />
         ) : null}
@@ -162,12 +144,10 @@ function MobileMenuButton({
 function MobileMenu({
   header,
   pathname,
-  time,
   onClose,
 }: {
   header: ResumeContent["header"];
   pathname: string;
-  time: string;
   onClose: () => void;
 }) {
   return (
@@ -245,20 +225,20 @@ function MobileMenu({
           </div>
         </motion.div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.28, duration: 0.2 }}
-          className="px-3 pt-2 text-xs text-muted"
+          className="px-3 pt-2"
         >
-          <span className="tabular-nums">{time}</span>
-        </motion.p>
+          <HeaderClock />
+        </motion.div>
       </motion.div>
     </motion.div>
   );
 }
 
-function NavLinks({
+const NavLinks = memo(function NavLinks({
   pathname,
   nav,
 }: {
@@ -266,7 +246,7 @@ function NavLinks({
   nav: ResumeContent["header"]["nav"];
 }) {
   return (
-    <div className="scrollbar-none flex min-w-0 flex-1 flex-nowrap items-center justify-center gap-2 overflow-hidden">
+    <div className="flex min-w-0 flex-1 flex-nowrap items-center justify-center gap-2 overflow-visible">
       {nav.map((item) => {
         const active =
           item.href === "/"
@@ -288,6 +268,32 @@ function NavLinks({
         );
       })}
     </div>
+  );
+});
+
+function HeaderClock({ className = "" }: { className?: string }) {
+  const [time, setTime] = useState("00:00:00");
+
+  useEffect(() => {
+    const tick = () => {
+      setTime(
+        new Date().toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }),
+      );
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <span className={`inline-block min-w-[4.5rem] tabular-nums text-xs text-muted ${className}`}>
+      {time}
+    </span>
   );
 }
 
