@@ -40,6 +40,12 @@
         "icon": "github"
       },
       {
+        "id": "telegram",
+        "label": "t.me/nyrokume",
+        "href": "https://t.me/nyrokume",
+        "icon": "telegram"
+      },
+      {
         "id": "connect",
         "label": "send email",
         "href": "mailto:nyrokumework@gmail.com?subject=Collaboration%20inquiry",
@@ -51,12 +57,6 @@
         "label": "Questions about the site?",
         "icon": "chat",
         "behavior": "openChat"
-      },
-      {
-        "id": "copy",
-        "label": "copy name",
-        "icon": "copy",
-        "copyValue": "nyrokume.dev"
       }
     ]
   },

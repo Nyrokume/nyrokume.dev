@@ -56,9 +56,8 @@ export type HeroAction = {
   id: string;
   label: string;
   href?: string;
-  icon: "github" | "mail" | "copy" | "chat";
+  icon: "github" | "mail" | "telegram" | "chat";
   primary?: boolean;
-  copyValue?: string;
   behavior?: "openChat";
 };
 
