@@ -62,7 +62,7 @@ export function HeroSection({
         </div>
 
         <motion.div
-          className="flex flex-wrap gap-3 pt-1"
+          className="grid grid-cols-2 gap-3 pt-1 sm:gap-4 lg:grid-cols-4"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 1.1 }}
@@ -91,26 +91,26 @@ function HeroActionButton({
   chatOpen?: boolean;
 }) {
   const baseClass =
-    "focus-ring inline-flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2.5 text-sm transition-colors";
+    "focus-ring flex w-full min-h-12 cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 py-3 text-center text-sm leading-snug transition-colors sm:min-h-[3.25rem] sm:px-4 sm:py-3.5 sm:text-base";
   const className = action.primary
     ? `${baseClass} border-accent/50 text-foreground hover:border-accent hover:bg-accent-muted`
     : `${baseClass} border-border text-muted-light hover:border-muted hover:text-foreground`;
 
   const icon = action.icon === "github" ? (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 fill-current" aria-hidden>
       <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-3 .7-3.6-1.3-3.6-1.3-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1.7 1.7 2.5 1.2.1-.9.4-1.5.7-1.8-2.4-.3-4.9-1.2-4.9-5.4 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.3 10.3 0 0 1 5.4 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.2-2.5 5.1-4.9 5.4.4.3.8 1 .8 2v3c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" />
     </svg>
   ) : action.icon === "telegram" ? (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 fill-current" aria-hidden>
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38Z" />
     </svg>
   ) : action.icon === "mail" ? (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 fill-none stroke-current" aria-hidden>
       <path strokeWidth="2" d="M4 6h16v12H4z" />
       <path strokeWidth="2" d="m4 7 8 5 8-5" />
     </svg>
   ) : action.icon === "chat" ? (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 fill-none stroke-current" aria-hidden>
       <path strokeWidth="2" d="M4 5h16v11H8l-4 4V5Z" strokeLinejoin="round" />
       <path strokeWidth="2" d="M8 9h8M8 12h5" strokeLinecap="round" />
     </svg>
@@ -143,7 +143,7 @@ function HeroActionButton({
         {icon}
         {action.label}
         {action.icon === "github" || action.icon === "telegram" ? (
-          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-none stroke-current" aria-hidden>
+          <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 fill-none stroke-current" aria-hidden>
             <path strokeWidth="2" d="M7 17 17 7M9 7h8v8" />
           </svg>
         ) : null}
