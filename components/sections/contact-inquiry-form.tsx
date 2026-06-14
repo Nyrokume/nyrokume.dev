@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocale } from "@/components/providers/locale-provider";
 import { TerminalReveal } from "@/components/ui/terminal-anim";
 import { getInquiryApiUrl } from "@/lib/api-base-url";
+import { buildInquiryMailto } from "@/lib/inquiry-mailto";
 import type { ContactInquiryConfig } from "@/lib/types";
 
 type ContactInquiryFormProps = {
@@ -20,6 +21,7 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mailtoFallback, setMailtoFallback] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -28,16 +30,22 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
     setLoading(true);
     setError(null);
     setSuccess(false);
+    setMailtoFallback(null);
 
     try {
+      const payload = {
+        name: name.trim(),
+        contact: contact.trim(),
+        message: message.trim(),
+        locale,
+      };
+      const mailto = buildInquiryMailto(payload);
+
       const response = await fetch(getInquiryApiUrl(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: name.trim(),
-          contact: contact.trim(),
-          message: message.trim(),
-          locale,
+          ...payload,
           website,
         }),
       });
@@ -51,6 +59,7 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
 
       if (!response.ok) {
         if (response.status === 503) {
+          setMailtoFallback(mailto);
           throw new Error(inquiry.unavailableLabel);
         }
         throw new Error(data.error ?? inquiry.errorLabel);
@@ -63,6 +72,18 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
       setWebsite("");
     } catch (submitError) {
       const raw = submitError instanceof Error ? submitError.message : inquiry.errorLabel;
+      const isNetwork =
+        raw === "Failed to fetch" || raw.includes("NetworkError") || raw === inquiry.unavailableLabel;
+      if (isNetwork && !mailtoFallback) {
+        setMailtoFallback(
+          buildInquiryMailto({
+            name: name.trim(),
+            contact: contact.trim(),
+            message: message.trim(),
+            locale,
+          }),
+        );
+      }
       setError(raw === "Failed to fetch" ? inquiry.unavailableLabel : raw);
     } finally {
       setLoading(false);
@@ -155,9 +176,19 @@ export function ContactInquiryForm({ inquiry, delay = 0 }: ContactInquiryFormPro
           ) : null}
 
           {error ? (
-            <p className="rounded border border-accent/40 bg-accent-muted px-3 py-2 text-sm text-accent-bright">
-              {error}
-            </p>
+            <div className="space-y-2">
+              <p className="rounded border border-accent/40 bg-accent-muted px-3 py-2 text-sm text-accent-bright">
+                {error}
+              </p>
+              {mailtoFallback ? (
+                <a
+                  href={mailtoFallback}
+                  className="focus-ring inline-flex cursor-pointer rounded border border-border px-3 py-2 text-sm text-foreground transition-colors hover:border-accent/40 hover:text-prompt-user"
+                >
+                  {inquiry.fallbackMailLabel}
+                </a>
+              ) : null}
+            </div>
           ) : null}
 
           <button

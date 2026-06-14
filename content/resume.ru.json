@@ -309,7 +309,8 @@
       "sendingLabel": "отправка...",
       "successLabel": "Заявка отправлена — скоро отвечу.",
       "errorLabel": "Не удалось отправить заявку.",
-      "unavailableLabel": "Форма временно недоступна — напишите в telegram или на почту."
+      "unavailableLabel": "Telegram пока не настроен — отправьте заявку на почту.",
+      "fallbackMailLabel": "отправить на почту"
     },
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",

@@ -309,7 +309,8 @@
       "sendingLabel": "sending...",
       "successLabel": "Inquiry sent — I will reply soon.",
       "errorLabel": "Could not send the inquiry.",
-      "unavailableLabel": "Form is temporarily unavailable — message me on telegram or email."
+      "unavailableLabel": "Telegram is not configured yet — send your inquiry by email.",
+      "fallbackMailLabel": "send via email"
     },
     "echoCommand": "echo \"open for collab\"",
     "echoOutput": "open for collab",

@@ -9,7 +9,8 @@
     "build": "next build",
     "build:pages": "node scripts/pages-build.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "telegram:chat-id": "node scripts/telegram-chat-id.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

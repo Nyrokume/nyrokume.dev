@@ -130,6 +130,7 @@ export type ContactInquiryConfig = {
   successLabel: string;
   errorLabel: string;
   unavailableLabel: string;
+  fallbackMailLabel: string;
 };
 
 export type ContactCard = {
