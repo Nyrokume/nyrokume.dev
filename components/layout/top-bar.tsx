@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useLocale } from "@/components/providers/locale-provider";
+import { useTheme } from "@/components/providers/theme-provider";
+import { THEME_LABELS, THEME_SWATCHES, COLOR_THEMES } from "@/lib/theme";
 import type { ResumeContent } from "@/lib/types";
 
 /** Inline nav from lg (1024px). Below — hamburger menu. */
@@ -69,7 +71,7 @@ export function TopBar() {
   }, [menuOpen, isCompact]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 overflow-visible border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="header-shell flex flex-col py-3 sm:py-4 lg:min-h-[4.25rem] lg:flex-row lg:items-center lg:gap-6 lg:py-3">
         <div className="flex min-w-0 items-center justify-between gap-3 lg:shrink-0 lg:min-w-[11rem]">
           <div className="flex min-w-0 items-center gap-1.5 text-sm sm:gap-2">
@@ -86,7 +88,7 @@ export function TopBar() {
           {isCompact ? (
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <span className="tabular-nums text-xs text-muted">{time}</span>
-              <LanguageSwitch locale={locale} setLocale={setLocale} />
+              <LocaleThemeControls locale={locale} setLocale={setLocale} />
               <MobileMenuButton
                 open={menuOpen}
                 onClick={() => setMenuOpen((value) => !value)}
@@ -98,7 +100,7 @@ export function TopBar() {
         {!isCompact ? (
           <>
             <nav
-              className="scrollbar-none hidden min-w-0 flex-1 items-center gap-2 overflow-hidden lg:flex"
+              className="scrollbar-none hidden min-w-0 flex-1 items-center gap-2 overflow-visible lg:flex"
               aria-label="Site"
             >
               <NavLinks pathname={pathname} nav={header.nav} />
@@ -106,7 +108,7 @@ export function TopBar() {
               <span className="shrink-0 tabular-nums text-xs text-muted">{time}</span>
             </nav>
             <div className="hidden shrink-0 lg:flex">
-              <LanguageSwitch locale={locale} setLocale={setLocale} />
+              <LocaleThemeControls locale={locale} setLocale={setLocale} />
             </div>
           </>
         ) : null}
@@ -289,6 +291,140 @@ function NavLinks({
   );
 }
 
+function LocaleThemeControls({
+  locale,
+  setLocale,
+}: {
+  locale: string;
+  setLocale: (locale: "ru" | "en") => void;
+}) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <LanguageSwitch locale={locale} setLocale={setLocale} />
+      <ThemeSwitch locale={locale} />
+    </div>
+  );
+}
+
+function ThemeSwitch({ locale }: { locale: string }) {
+  const { theme, setTheme } = useTheme();
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lang = locale === "en" ? "en" : "ru";
+  const currentLabel = THEME_LABELS[theme][lang];
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnOutside = (event: MouseEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("click", closeOnOutside);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("click", closeOnOutside);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative shrink-0">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-label={
+          lang === "ru"
+            ? `Тема: ${currentLabel}. Открыть выбор цвета.`
+            : `Theme: ${currentLabel}. Open color picker.`
+        }
+        onClick={(event) => {
+          event.stopPropagation();
+          setOpen((value) => !value);
+        }}
+        className="focus-ring flex h-7 cursor-pointer items-center gap-1 rounded border border-border px-1.5 transition-colors hover:border-accent/40"
+      >
+        <span
+          className="h-2.5 w-2.5 shrink-0 rounded-full border border-white/10"
+          style={{ backgroundColor: THEME_SWATCHES[theme] }}
+          aria-hidden
+        />
+        <svg
+          viewBox="0 0 24 24"
+          className={`h-2.5 w-2.5 fill-none stroke-current text-muted transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
+          aria-hidden
+        >
+          <path strokeWidth="2.5" d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+
+      <div
+        className={`absolute right-0 top-full z-[60] pt-1 transition-opacity duration-150 ${
+          open
+            ? "pointer-events-auto visible opacity-100"
+            : "pointer-events-none invisible opacity-0"
+        }`}
+      >
+        <div
+          role="listbox"
+          aria-label={lang === "ru" ? "Цветовые темы" : "Color themes"}
+          className="w-[11.5rem] rounded border border-border bg-surface-elevated p-2 shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
+        >
+          <p className="mb-2 px-1 text-[10px] uppercase tracking-widest text-muted">
+            {lang === "ru" ? "тема" : "theme"}
+          </p>
+          <div className="grid grid-cols-5 gap-1.5">
+            {COLOR_THEMES.map((id) => {
+              const selected = theme === id;
+              const label = THEME_LABELS[id][lang];
+
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  title={label}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setTheme(id);
+                    setOpen(false);
+                  }}
+                  className={`focus-ring flex cursor-pointer flex-col items-center gap-1 rounded p-1 transition-colors ${
+                    selected
+                      ? "bg-accent-muted ring-1 ring-accent/60"
+                      : "hover:bg-surface"
+                  }`}
+                >
+                  <span
+                    className={`h-5 w-5 rounded-full border ${
+                      selected ? "border-foreground/30" : "border-border"
+                    }`}
+                    style={{ backgroundColor: THEME_SWATCHES[id] }}
+                    aria-hidden
+                  />
+                  <span className="max-w-[2.75rem] truncate text-[8px] leading-none text-muted">
+                    {label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LanguageSwitch({
   locale,
   setLocale,
@@ -334,10 +470,10 @@ function SocialDropdown({ header }: { header: ResumeContent["header"] }) {
       if (event.key === "Escape") setOpen(false);
     };
 
-    document.addEventListener("mousedown", closeOnOutside);
+    document.addEventListener("click", closeOnOutside);
     document.addEventListener("keydown", closeOnEscape);
     return () => {
-      document.removeEventListener("mousedown", closeOnOutside);
+      document.removeEventListener("click", closeOnOutside);
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, [open]);
@@ -348,7 +484,10 @@ function SocialDropdown({ header }: { header: ResumeContent["header"] }) {
         type="button"
         aria-expanded={open}
         aria-haspopup="menu"
-        onClick={() => setOpen((value) => !value)}
+        onClick={(event) => {
+          event.stopPropagation();
+          setOpen((value) => !value);
+        }}
         className="focus-ring flex cursor-pointer items-center gap-1.5 rounded border border-transparent px-2 py-1.5 text-sm text-foreground transition-colors hover:border-border hover:text-prompt-user"
       >
         <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current" aria-hidden>

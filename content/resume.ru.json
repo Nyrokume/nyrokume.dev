@@ -41,14 +41,14 @@
       },
       {
         "id": "connect",
-        "label": "./connect.sh",
+        "label": "отправить письмо",
         "href": "mailto:nyrokumework@gmail.com?subject=Collaboration%20inquiry",
         "icon": "mail",
         "primary": true
       },
       {
         "id": "copy",
-        "label": "copy handle",
+        "label": "скопировать имя",
         "icon": "copy",
         "copyValue": "nyrokume.dev"
       }
@@ -258,6 +258,20 @@
         "label": "telegram",
         "value": "@nyrokume",
         "href": "https://t.me/nyrokume"
+      },
+      {
+        "id": "discord",
+        "icon": "discord",
+        "label": "discord",
+        "value": "@nyrokume",
+        "copy": true
+      },
+      {
+        "id": "vk",
+        "icon": "vk",
+        "label": "вконтакте",
+        "value": "vk.com/nyrokume.github",
+        "href": "https://vk.com/nyrokume.github"
       },
       {
         "id": "mail",

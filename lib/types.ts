@@ -116,7 +116,7 @@ export type ProjectItem = {
 
 export type ContactCard = {
   id: string;
-  icon: "github" | "handle" | "telegram" | "mail";
+  icon: "github" | "handle" | "telegram" | "mail" | "vk" | "discord";
   label: string;
   value: string;
   href?: string;

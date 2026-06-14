@@ -88,8 +88,8 @@ export function StatCard({ stat, index }: StatCardProps) {
     },
     whileHover: {
       y: -3,
-      borderColor: "rgba(255, 107, 43, 0.45)",
-      boxShadow: "0 0 24px rgba(255, 107, 43, 0.12)",
+      borderColor: "var(--border-accent)",
+      boxShadow: "0 0 24px var(--accent-muted)",
     },
     className: `group relative overflow-hidden rounded-lg border border-border bg-surface-elevated px-4 py-3 transition-colors${
       stat.href ? " cursor-pointer" : ""
