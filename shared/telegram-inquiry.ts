@@ -1,20 +1,12 @@
 export type InquiryLocale = "ru" | "en";
 
 export type InquiryClientMeta = {
-  page?: string;
-  referrer?: string;
   language?: string;
-  languages?: string;
-  timezone?: string;
-  screen?: string;
-  viewport?: string;
-  platform?: string;
-  userAgent?: string;
+  browser?: string;
 };
 
 export type InquiryMeta = InquiryClientMeta & {
   ip?: string;
-  country?: string;
 };
 
 export type InquiryPayload = {
@@ -40,7 +32,7 @@ import {
 } from "./inquiry-validation";
 
 const MAX_META_FIELD = 512;
-const MAX_USER_AGENT = 320;
+const MAX_BROWSER = 320;
 
 function escapeHtml(value: string): string {
   return value
@@ -63,15 +55,8 @@ export function parseInquiryClientMeta(raw: unknown): InquiryMeta | undefined {
 
   const body = raw as Record<string, unknown>;
   const meta: InquiryMeta = {
-    page: trimMetaField(body.page),
-    referrer: trimMetaField(body.referrer),
     language: trimMetaField(body.language, 32),
-    languages: trimMetaField(body.languages, 120),
-    timezone: trimMetaField(body.timezone, 64),
-    screen: trimMetaField(body.screen, 32),
-    viewport: trimMetaField(body.viewport, 32),
-    platform: trimMetaField(body.platform, 64),
-    userAgent: trimMetaField(body.userAgent, MAX_USER_AGENT),
+    browser: trimMetaField(body.browser ?? body.userAgent, MAX_BROWSER),
   };
 
   const hasValue = Object.values(meta).some(Boolean);
@@ -92,20 +77,18 @@ export function enrichInquiryFromRequest(
   payload: InquiryPayload,
   request: Request,
 ): InquiryPayload {
-  const country = request.headers.get("CF-IPCountry")?.trim().toUpperCase();
   const ip = getClientIp(request);
-  const requestUserAgent = request.headers.get("user-agent")?.trim();
+  const requestBrowser = request.headers.get("user-agent")?.trim();
 
   const meta: InquiryMeta = {
     ...payload.meta,
     ip: ip ?? payload.meta?.ip,
-    country: country && country !== "XX" ? country : payload.meta?.country,
-    userAgent:
-      payload.meta?.userAgent ??
-      (requestUserAgent
-        ? requestUserAgent.length > MAX_USER_AGENT
-          ? requestUserAgent.slice(0, MAX_USER_AGENT)
-          : requestUserAgent
+    browser:
+      payload.meta?.browser ??
+      (requestBrowser
+        ? requestBrowser.length > MAX_BROWSER
+          ? requestBrowser.slice(0, MAX_BROWSER)
+          : requestBrowser
         : undefined),
   };
 
@@ -159,44 +142,20 @@ function formatMetaLines(meta: InquiryMeta | undefined, locale: InquiryLocale): 
       ? {
           section: "Client",
           ip: "IP",
-          country: "Country",
-          page: "Page",
-          referrer: "Referrer",
           language: "Language",
-          languages: "Languages",
-          timezone: "Timezone",
-          screen: "Screen",
-          viewport: "Viewport",
-          platform: "Platform",
-          userAgent: "User-Agent",
+          browser: "Browser",
         }
       : {
           section: "Клиент",
           ip: "IP",
-          country: "Страна",
-          page: "Страница",
-          referrer: "Referrer",
           language: "Язык",
-          languages: "Языки",
-          timezone: "Часовой пояс",
-          screen: "Экран",
-          viewport: "Viewport",
-          platform: "Платформа",
-          userAgent: "User-Agent",
+          browser: "Браузер",
         };
 
   const entries: Array<[string, string | undefined]> = [
     [labels.ip, meta.ip],
-    [labels.country, meta.country],
-    [labels.page, meta.page],
-    [labels.referrer, meta.referrer],
     [labels.language, meta.language],
-    [labels.languages, meta.languages],
-    [labels.timezone, meta.timezone],
-    [labels.screen, meta.screen],
-    [labels.viewport, meta.viewport],
-    [labels.platform, meta.platform],
-    [labels.userAgent, meta.userAgent],
+    [labels.browser, meta.browser],
   ];
 
   const lines = entries
